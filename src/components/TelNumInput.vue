@@ -1,16 +1,55 @@
 <template>
-    <div class="tel-num-input">
+    <div class="tel-num-input" :class="sizeClass">
         <div class="tel-num-input__head">
             <div class="prefix-container"></div>
-            <input type="text" />
+            <input type="text" :placeholder="placeholder" :disabled="disabled" />
         </div>
 
-        <div class="tel-num-input__body"></div>
-        <!-- <input /> -->
+        <div class="tel-num-input__body">
+            <div v-for="item of validCountries" class="tel-num-input__body--item">
+                {{ item.code }}
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { computed, toRefs } from "vue";
+import { useValidCountries } from "~/composables/useValidCountries";
+import { usePlaceholder } from "~/composables/usePlaceholder";
+
+const props = withDefaults(
+    defineProps<{
+        size?: "sm" | "md" | "lg" | "xl" | "xxl";
+        disableSizing?: boolean;
+        countryCodes?: string[];
+        excludeCountryCodes?: string[];
+        defaultCountryCode?: string;
+        placeholder?: Record<string, string> | string;
+        locale?: string;
+        disabled?: boolean;
+        silent?: boolean;
+    }>(),
+    {
+        size: "lg",
+        disableSizing: false,
+        countryCodes: () => [],
+        excludeCountryCodes: () => [],
+        defaultCountryCode: "US",
+        disabled: false,
+        silent: false,
+    }
+);
+
+const refProps = toRefs(props);
+const sizeClass = computed(() => (refProps.disableSizing.value ? "" : `tel-num-input--${refProps.size.value ?? "lg"}`));
+
+const { validCountries } = useValidCountries(refProps.countryCodes, refProps.excludeCountryCodes, refProps.defaultCountryCode, refProps.silent);
+const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, refProps.silent);
+// Development flow:
+// 1. Basic structure: button with code + flag, input for phone number
+// 2. Dropdown for country codes, user can choose country code + choose only which country codes to show
+
 // Features:
 
 // TODO: Dropdown for country codes
@@ -37,12 +76,14 @@
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/styles/layout.scss" as *;
+
 .tel-num-input {
     display: flex;
     flex-direction: column;
     width: 100%;
     font-family: inherit;
-    font-size: 14px;
+    font-size: var(--tel-input-font-size, 14px);
     color: #333;
 
     &__head {
@@ -53,17 +94,19 @@
         border-radius: 6px;
         overflow: hidden;
         background-color: #fff;
+        height: var(--tel-input-height, 40px);
 
         .prefix-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 12px;
+            padding: 0 var(--tel-input-prefix-padding-x, 12px);
             background-color: #f9f9f9;
             border-right: 1px solid #ccc;
             cursor: pointer;
             transition: background-color 0.2s;
             height: 100%;
+            font-size: var(--tel-input-font-size, 14px);
 
             &:hover {
                 background-color: #eee;
@@ -76,10 +119,10 @@
 
         input {
             flex: 1;
-            padding: 8px 12px;
+            padding: var(--tel-input-padding-y, 8px) var(--tel-input-padding-x, 12px);
             border: none;
             outline: none;
-            font-size: 14px;
+            font-size: var(--tel-input-font-size, 14px);
 
             &::placeholder {
                 color: #aaa;

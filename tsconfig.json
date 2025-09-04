@@ -6,8 +6,11 @@
         "strict": true,
         "skipLibCheck": true,
         "jsx": "preserve",
-        "isolatedModules": true,
-        "types": ["vite/client"]
+        "baseUrl": ".",
+        "paths": {
+            "~/*": ["src/*"]
+        },
+        "resolveJsonModule": true
     },
     "include": ["src", "src/env.d.ts"]
 }

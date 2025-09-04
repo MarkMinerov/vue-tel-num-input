@@ -1,4 +1,3 @@
-import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
@@ -6,12 +5,14 @@ import path from "path";
 
 export default defineConfig({
     plugins: [vue(), dts({ entryRoot: "src", outDir: "dist/types", include: ["src"] })],
+    resolve: {
+        alias: {
+            "~": path.resolve(__dirname, "./src"),
+        },
+    },
     css: {
         preprocessorOptions: {
-            scss: {
-                // сюда можно добавить глобальные переменные/миксины
-                // additionalData: `@import "./src/styles/variables.scss";`
-            },
+            scss: {},
         },
     },
     build: {
@@ -30,7 +31,7 @@ export default defineConfig({
                     return "assets/[name][extname]";
                 },
             },
-            plugins: [visualizer({ filename: "stats.html", gzipSize: true })],
+            // plugins: [visualizer({ filename: "stats.html", gzipSize: true })],
         },
     },
 });

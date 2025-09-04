@@ -1,0 +1,39 @@
+.tel-num-input--sm {
+    --tel-input-height: 28px;
+    --tel-input-font-size: 12px;
+    --tel-input-padding-y: 4px;
+    --tel-input-padding-x: 6px;
+    --tel-input-prefix-padding-x: 8px;
+}
+
+.tel-num-input--md {
+    --tel-input-height: 34px;
+    --tel-input-font-size: 13px;
+    --tel-input-padding-y: 6px;
+    --tel-input-padding-x: 8px;
+    --tel-input-prefix-padding-x: 10px;
+}
+
+.tel-num-input--lg {
+    --tel-input-height: 40px;
+    --tel-input-font-size: 14px;
+    --tel-input-padding-y: 8px;
+    --tel-input-padding-x: 12px;
+    --tel-input-prefix-padding-x: 12px;
+}
+
+.tel-num-input--xl {
+    --tel-input-height: 48px;
+    --tel-input-font-size: 16px;
+    --tel-input-padding-y: 10px;
+    --tel-input-padding-x: 14px;
+    --tel-input-prefix-padding-x: 14px;
+}
+
+.tel-num-input--xxl {
+    --tel-input-height: 56px;
+    --tel-input-font-size: 18px;
+    --tel-input-padding-y: 12px;
+    --tel-input-padding-x: 16px;
+    --tel-input-prefix-padding-x: 16px;
+}

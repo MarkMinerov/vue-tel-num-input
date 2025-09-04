@@ -19,9 +19,8 @@
     },
     "scripts": {
         "clean": "rimraf dist",
-        "dev": "npm-run-all -p watch:build play",
+        "dev": "vite",
         "watch:build": "vite build --watch",
-        "play": "vite --config examples/vite.config.ts",
         "build": "npm-run-all clean build:once",
         "build:once": "vite build",
         "preview": "vite preview"
