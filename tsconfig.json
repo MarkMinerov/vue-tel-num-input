@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "strict": true,
+        "skipLibCheck": true,
+        "jsx": "preserve",
+        "isolatedModules": true,
+        "types": ["vite/client"]
+    },
+    "include": ["src", "src/env.d.ts"]
+}
