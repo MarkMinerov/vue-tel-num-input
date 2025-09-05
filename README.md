@@ -3,14 +3,10 @@
 A fully customizable and flexible **phone number input component** for Vue 3.  
 It provides a polished user experience with country code selection, flags, masking, localization, and more.
 
----
-
 ## ✨ Vision
 
 The goal is to build a **developer-friendly, highly configurable** phone input field.  
 The component should cover the most common use cases while allowing full customization through props, slots, and configuration.
-
----
 
 ## 🚧 Development Flow
 
@@ -22,8 +18,6 @@ The component should cover the most common use cases while allowing full customi
 2. **Dropdown for country codes**
     - User can choose a country code
     - Developer can control which countries to show
-
----
 
 ## 🔑 Features (planned & in progress)
 
@@ -51,16 +45,12 @@ The component should cover the most common use cases while allowing full customi
     -   Switch between local/national code vs global format
     -   Option to disable default styles (style from scratch)
 
----
-
 ## 🎯 Goals
 
 -   **Flexibility:** provide sensible defaults, but allow replacing any part (button, input, dropdown) with your own implementation.
 -   **Customization:** choose your own data sources, icons, masks, and styles.
 -   **Developer Experience:** clean API, TypeScript support, documented props & slots.
 -   **Performance:** lazy-loading assets (flags, sprites, CDN images), optional virtualization for dropdown.
-
----
 
 ## 🛠 Installation
 
