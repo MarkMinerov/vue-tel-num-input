@@ -1,10 +1,27 @@
 <template>
-    <div class="tel-num-input" :class="sizeClass">
+    <div class="tel-num-input" ref="telNumInput" :class="[sizeClass, { expanded: model.expanded }]">
         <div class="tel-num-input__head">
-            <div class="prefix-container">
-                <FlagIcon :flag="refProps.flag" value="us" />
+            <div v-if="!prefix.hidden" class="prefix-container" @click="switchDropdown()">
+                <slot name="prefix:flag">
+                    <FlagIcon v-if="!prefix.hideFlag" :flag="flag" :value="model.countryCode" class="prefix-container__flag" />
+                </slot>
+
+                <slot name="prefix:code">
+                    <span v-if="!prefix.hideCode" class="prefix-container__code">{{ model.config.code }}</span>
+                </slot>
+
+                <slot name="prefix:countryName">
+                    <span v-if="!prefix.hideCountryName" class="prefix-container__country-name">{{ model.config.name }}</span>
+                </slot>
+
+                <slot name="prefix:chevron">
+                    <svg v-if="!prefix.hideChevron" class="prefix-container__chevron" viewBox="0 0 16 16">
+                        <path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                    </svg>
+                </slot>
             </div>
-            <input type="text" :placeholder="placeholder" :disabled="disabled" />
+
+            <input type="text" :placeholder="placVal" :disabled="disabled" />
         </div>
 
         <!-- <div class="tel-num-input__body">
@@ -16,27 +33,37 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, toRefs } from "vue";
+import { computed, toRefs, reactive, useTemplateRef } from "vue";
+import type { FlagConfig } from "~/types";
 import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
 
-import type { FlagConfig } from "~/types";
+import { onClickOutside } from "@vueuse/core";
 
 import FlagIcon from "./FlagIcon.vue";
 
 const props = withDefaults(
-    defineProps<{
-        size?: "sm" | "md" | "lg" | "xl" | "xxl";
-        disableSizing?: boolean;
-        countryCodes?: string[];
-        excludeCountryCodes?: string[];
-        defaultCountryCode?: string;
-        placeholder?: Record<string, string> | string;
-        locale?: string;
-        disabled?: boolean;
-        silent?: boolean;
-        flag?: FlagConfig;
-    }>(),
+    defineProps<
+        Partial<{
+            size: "sm" | "md" | "lg" | "xl" | "xxl";
+            disableSizing: boolean;
+            countryCodes: string[];
+            excludeCountryCodes: string[];
+            defaultCountryCode: string;
+            placeholder: Record<string, string> | string;
+            locale: string;
+            disabled: boolean;
+            silent: boolean;
+            flag: FlagConfig;
+            prefix: {
+                hidden: boolean;
+                hideCode: boolean;
+                hideFlag: boolean;
+                hideChevron: boolean;
+                hideCountryName: boolean;
+            };
+        }>
+    >(),
     {
         size: "lg",
         disableSizing: false,
@@ -45,29 +72,32 @@ const props = withDefaults(
         defaultCountryCode: "US",
         disabled: false,
         silent: false,
+        prefix: () => ({ hidden: false, hideCode: false, hideFlag: false, hideCountryName: false, hideChevron: false }),
     }
 );
 
-const refProps = toRefs(props);
-const sizeClass = computed(() => (refProps.disableSizing.value ? "" : `tel-num-input--${refProps.size.value ?? "lg"}`));
+const { countryCodes, excludeCountryCodes, defaultCountryCode, silent, locale, placeholder, disableSizing, size } = toRefs(props);
 
-const { validCountries } = useValidCountries(refProps.countryCodes, refProps.excludeCountryCodes, refProps.defaultCountryCode, refProps.silent);
-const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, refProps.silent);
+const sizeClass = computed(() => (disableSizing.value ? "" : `tel-num-input--${size.value ?? "lg"}`));
+const { validCountries, validDefCountryCode, config } = useValidCountries(countryCodes, excludeCountryCodes, defaultCountryCode, silent);
+const { placVal } = usePlaceholder(locale, placeholder, silent);
 
-// watchImmediate(refProps.iconSource, () => {
-//     switch (refProps.iconSource.value) {
-//         case "emoji":
-//             console.log("emoji");
-//             break;
-//         case "sprite":
-//             break;
-//         case "cdn":
-//             console.log("cdn");
-//             break;
-//         default:
-//             console.warn(`Invalid icon source: ${refProps.iconSource.value}`);
-//     }
-// });
+const telNumInputEl = useTemplateRef<HTMLElement>("telNumInput");
+onClickOutside(telNumInputEl, (event) => {
+    switchDropdown(false);
+});
+
+const model = reactive({
+    countryCode: validDefCountryCode,
+    config: config[validDefCountryCode.value],
+    expanded: false,
+});
+
+const switchDropdown = (value?: boolean) => {
+    if (value == null) model.expanded = !model.expanded;
+    else model.expanded = value;
+};
+
 // Development flow:
 // 1. Basic structure: button with code + flag, input for phone number
 // 2. Dropdown for country codes, user can choose country code + choose only which country codes to show
@@ -108,6 +138,28 @@ const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, re
     font-size: var(--tel-input-font-size, 14px);
     color: #333;
 
+    &.expanded {
+        .tel-num-input__head {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+
+            .prefix-container__chevron {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* .tel-num-input__body {
+            display: block;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            background-color: #fff;
+        } */
+    }
+
     &__head {
         display: flex;
         flex-direction: row;
@@ -129,6 +181,7 @@ const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, re
             transition: background-color 0.2s;
             height: 100%;
             font-size: var(--tel-input-font-size, 14px);
+            gap: var(--tel-input-prefix-gap, 8px);
 
             &:hover {
                 background-color: #eee;
@@ -136,6 +189,12 @@ const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, re
 
             &:active {
                 background-color: #ddd;
+            }
+
+            &__chevron {
+                width: var(--tel-input-icon-size, 12px);
+                height: var(--tel-input-icon-size, 12px);
+                transition: var(--tel-input-chevron-transition-func, ease) var(--tel-input-transition-duration, 0.3s) var(--tel-input-chevron-transition-delay, 0s) var(--tel-input-chevron-transition-prop, transform);
             }
         }
 
@@ -145,6 +204,7 @@ const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, re
             border: none;
             outline: none;
             font-size: var(--tel-input-font-size, 14px);
+            width: var(--tel-input-input-width, 200px);
 
             &::placeholder {
                 color: #aaa;

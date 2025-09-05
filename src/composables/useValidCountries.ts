@@ -10,10 +10,10 @@ export const useValidCountries = (refCountryCodes: Ref<string[]>, excludeCountry
     let warn = useWarn(silent.value);
     watch(silent, (newVal) => (warn = useWarn(newVal)));
 
-    const isoCodes = Object.keys(config);
+    const isoCodes = Object.keys(config).map((code) => code.toUpperCase());
 
     const validCountryCodes = computed(() => {
-        const propsCountryCodes = Array.from(new Set(refCountryCodes.value));
+        const propsCountryCodes = Array.from(new Set(refCountryCodes.value.map((code) => code.toUpperCase())));
         let countryCodes: string[];
 
         if (!propsCountryCodes?.length) {
@@ -25,7 +25,8 @@ export const useValidCountries = (refCountryCodes: Ref<string[]>, excludeCountry
             countryCodes = validCodes;
         }
 
-        countryCodes = countryCodes.filter((code: string) => !excludeCountryCodes.value?.includes(code));
+        const excludeCountryCodesUpper = excludeCountryCodes.value.map((code) => code.toUpperCase());
+        countryCodes = countryCodes.filter((code: string) => !excludeCountryCodesUpper.includes(code));
 
         return countryCodes;
     });
@@ -33,9 +34,10 @@ export const useValidCountries = (refCountryCodes: Ref<string[]>, excludeCountry
     const validCountries = computed(() => validCountryCodes.value.map((code: string) => ({ ...config[code], code })));
 
     const validDefCountryCode = computed(() => {
-        if (!defCountryCode.value || !isoCodes.includes(defCountryCode.value)) return "US";
-        return defCountryCode.value;
+        const defCode = defCountryCode.value?.toUpperCase();
+        if (!defCode || !isoCodes.includes(defCode)) return "US";
+        return defCode;
     });
 
-    return { isoCodes, validCountryCodes, validCountries, validDefCountryCode };
+    return { isoCodes, validCountries, validDefCountryCode, config };
 };

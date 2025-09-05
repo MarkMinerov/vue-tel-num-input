@@ -6,7 +6,7 @@ export const usePlaceholder = (locale: Ref<string | undefined>, plac: Ref<string
     let warn = useWarn(silent.value);
     watch(silent, (newVal) => (warn = useWarn(newVal)));
 
-    const placeholder = computed(() => {
+    const placVal = computed(() => {
         const loc = locale ? locale.value : null;
         const ph = plac ? plac.value : null;
 
@@ -35,5 +35,5 @@ export const usePlaceholder = (locale: Ref<string | undefined>, plac: Ref<string
         return "Enter phone number";
     });
 
-    return { placeholder };
+    return { placVal };
 };
