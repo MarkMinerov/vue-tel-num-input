@@ -15,7 +15,8 @@
             "import": "./dist/index.es.js",
             "require": "./dist/index.cjs.js"
         },
-        "./style.css": "./dist/css/style.css"
+        "./style.css": "./dist/css/style.css",
+        "./flags.css": "./dist/css/sprite.css"
     },
     "scripts": {
         "clean": "rimraf dist",

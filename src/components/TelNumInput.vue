@@ -1,15 +1,17 @@
 <template>
     <div class="tel-num-input" :class="sizeClass">
         <div class="tel-num-input__head">
-            <div class="prefix-container"></div>
+            <div class="prefix-container">
+                <FlagIcon :flag="refProps.flag" value="us" />
+            </div>
             <input type="text" :placeholder="placeholder" :disabled="disabled" />
         </div>
 
-        <div class="tel-num-input__body">
+        <!-- <div class="tel-num-input__body">
             <div v-for="item of validCountries" class="tel-num-input__body--item">
                 {{ item.code }}
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -17,6 +19,10 @@
 import { computed, toRefs } from "vue";
 import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
+
+import type { FlagConfig } from "~/types";
+
+import FlagIcon from "./FlagIcon.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -29,6 +35,7 @@ const props = withDefaults(
         locale?: string;
         disabled?: boolean;
         silent?: boolean;
+        flag?: FlagConfig;
     }>(),
     {
         size: "lg",
@@ -46,6 +53,21 @@ const sizeClass = computed(() => (refProps.disableSizing.value ? "" : `tel-num-i
 
 const { validCountries } = useValidCountries(refProps.countryCodes, refProps.excludeCountryCodes, refProps.defaultCountryCode, refProps.silent);
 const { placeholder } = usePlaceholder(refProps.locale, refProps.placeholder, refProps.silent);
+
+// watchImmediate(refProps.iconSource, () => {
+//     switch (refProps.iconSource.value) {
+//         case "emoji":
+//             console.log("emoji");
+//             break;
+//         case "sprite":
+//             break;
+//         case "cdn":
+//             console.log("cdn");
+//             break;
+//         default:
+//             console.warn(`Invalid icon source: ${refProps.iconSource.value}`);
+//     }
+// });
 // Development flow:
 // 1. Basic structure: button with code + flag, input for phone number
 // 2. Dropdown for country codes, user can choose country code + choose only which country codes to show

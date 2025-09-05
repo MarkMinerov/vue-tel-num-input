@@ -5,33 +5,36 @@ import path from "path";
 
 export default defineConfig({
     plugins: [vue(), dts({ entryRoot: "src", outDir: "dist/types", include: ["src"] })],
-    resolve: {
-        alias: {
-            "~": path.resolve(__dirname, "./src"),
-        },
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {},
-        },
-    },
+    resolve: { alias: { "~": path.resolve(__dirname, "./src") } },
     build: {
         lib: {
-            entry: path.resolve(__dirname, "src/index.ts"),
-            name: "VueTelNumInput",
-            fileName: (format) => `index.${format}.js`,
+            entry: {
+                index: path.resolve(__dirname, "src/index.ts"),
+                sprite: path.resolve(__dirname, "src/css.entry.ts"),
+            },
             formats: ["es", "cjs"],
+            fileName: (format, name) => `${name}.${format}.js`,
         },
+        cssCodeSplit: true,
         rollupOptions: {
             external: ["vue"],
             output: {
                 globals: { vue: "Vue" },
+                entryFileNames: "[name].[format].js",
+                chunkFileNames: "chunks/[name]-[hash].js",
                 assetFileNames: (asset) => {
-                    if (asset.name && asset.name.endsWith(".css")) return "css/style.css";
+                    const names = asset.names ?? (asset.name ? [asset.name] : []);
+                    if (names.some((n) => n.endsWith(".css"))) {
+                        if (names.some((n) => /sprite/i.test(n))) return "css/sprite.css";
+                        return "css/style.css";
+                    }
+                    if (names.some((n) => /\.(png|jpe?g|svg|webp)$/i.test(n))) {
+                        if (names.some((n) => /sprite/i.test(n))) return "flags/[name][extname]";
+                        return "assets/[name][extname]";
+                    }
                     return "assets/[name][extname]";
                 },
             },
-            // plugins: [visualizer({ filename: "stats.html", gzipSize: true })],
         },
     },
 });
