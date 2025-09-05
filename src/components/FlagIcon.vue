@@ -1,5 +1,5 @@
 <template>
-    <span v-if="isSpriteStrategy" class="flag" :style="styles" :class="`flag-${value}`" />
+    <span v-if="isSpriteStrategy" class="flag" :style="styles" :class="`flag-${isoCode}`" />
     <span v-else-if="isEmojiStrategy" class="emoji" :style="styles">{{ emojiValue }}</span>
     <img v-else-if="isApiStrategy" :src="apiUrl" :style="styles" alt="" />
 </template>

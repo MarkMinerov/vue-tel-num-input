@@ -31,7 +31,7 @@ export const useValidCountries = (refCountryCodes: Ref<string[]>, excludeCountry
         return countryCodes;
     });
 
-    const validCountries = computed(() => validCountryCodes.value.map((code: string) => ({ ...config[code], code })));
+    const validCountries = computed(() => validCountryCodes.value.map((code: string) => ({ ...config[code], iso: code })));
 
     const validDefCountryCode = computed(() => {
         const defCode = defCountryCode.value?.toUpperCase();

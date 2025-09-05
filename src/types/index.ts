@@ -1,7 +1,7 @@
 export type CountryConfig = {
+    iso: string;
     name: string;
     code: string;
-    flag: string;
     mask: string;
 };
 
