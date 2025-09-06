@@ -25,70 +25,86 @@
                 <slot name="prefix:after" />
             </div>
 
-            <input type="text" @focus="emit('focus')" @blur="emit('blur')" :placeholder="placVal" :disabled="disabled" />
+            <slot name="input">
+                <input
+                    type="text"
+                    ref="inputEl"
+                    :maxLength="input.maxLength"
+                    @compositionstart="setComposing(true)"
+                    @compositionend="setComposing(false)"
+                    v-model="model.value"
+                    @focus="emit('focus')"
+                    @blur="emit('blur')"
+                    :placeholder="placVal"
+                    :disabled="disabled"
+                />
+            </slot>
         </div>
 
-        <!-- <span style="color: white">{{ model }}</span> -->
-        <!-- ADD SEARCH  -->
+        <Transition name="fade">
+            <div v-if="model.expanded && !list.hidden" class="tel-num-input__body">
+                <slot name="body:search">
+                    <div class="search-container" :style="{ height: `${itemHeightComp}px` }">
+                        <slot name="search:before" />
 
-        <div v-if="model.expanded && !list.hidden" class="tel-num-input__body">
-            <slot name="body:search">
-                <div class="search-container" :style="{ height: `${itemHeightComp}px` }">
-                    <slot name="search:before" />
+                        <slot name="search:icon">
+                            <svg width="50" height="50" viewBox="0 0 50 50">
+                                <path
+                                    d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"
+                                />
+                            </svg>
+                        </slot>
 
-                    <slot name="search:icon">
-                        <svg width="50" height="50" viewBox="0 0 50 50">
-                            <path
-                                d="M 21 3 C 11.601563 3 4 10.601563 4 20 C 4 29.398438 11.601563 37 21 37 C 24.355469 37 27.460938 36.015625 30.09375 34.34375 L 42.375 46.625 L 46.625 42.375 L 34.5 30.28125 C 36.679688 27.421875 38 23.878906 38 20 C 38 10.601563 30.398438 3 21 3 Z M 21 7 C 28.199219 7 34 12.800781 34 20 C 34 27.199219 28.199219 33 21 33 C 13.800781 33 8 27.199219 8 20 C 8 12.800781 13.800781 7 21 7 Z"
-                            />
-                        </svg>
-                    </slot>
+                        <slot name="search:input">
+                            <input v-if="!search.hidden" type="text" v-model="model.search" :placeholder="searchPlacVal" />
+                        </slot>
 
-                    <slot name="search:input">
-                        <input v-if="!search.hidden" type="text" v-model="model.search" :placeholder="searchPlacVal" />
-                    </slot>
+                        <slot name="search:after" />
+                    </div>
+                </slot>
 
-                    <slot name="search:after" />
-                </div>
-            </slot>
+                <div class="list-container" ref="scrollList" :style="{ maxHeight: `${listHeight}px` }">
+                    <div v-for="(data, index) of filteredCountries" :tabindex="index" @click="selectItem(data)" :class="{ selected: model.iso == data.iso }" :key="index" :style="{ height: `${itemHeightComp}px` }" class="tel-num-input__body--item">
+                        <slot name="item:before" />
 
-            <div class="list-container" ref="scrollList" :style="{ maxHeight: `${listHeight}px` }">
-                <div v-for="(data, index) of filteredCountries" :tabindex="index" @click="selectItem(data)" :class="{ selected: model.code == data.code }" :key="index" :style="{ height: `${itemHeightComp}px` }" class="tel-num-input__body--item">
-                    <slot name="item:before" />
+                        <slot name="item:flag">
+                            <FlagIcon v-if="!list.hideFlag" :flag="flag" :value="data.iso" class="tel-num-input__body--item__flag" />
+                        </slot>
 
-                    <slot name="item:flag">
-                        <FlagIcon v-if="!list.hideFlag" :flag="flag" :value="data.iso" class="tel-num-input__body--item__flag" />
-                    </slot>
+                        <slot name="item:code">
+                            <span v-if="!list.hideCode" class="tel-num-input__body--item__code">{{ data.code }}</span>
+                        </slot>
 
-                    <slot name="item:code">
-                        <span v-if="!list.hideCode" class="tel-num-input__body--item__code">{{ data.code }}</span>
-                    </slot>
+                        <slot name="item:countryName">
+                            <span v-if="!list.hideCountryName" class="tel-num-input__body--item__country-name">{{ data.name }}</span>
+                        </slot>
 
-                    <slot name="item:countryName">
-                        <span v-if="!list.hideCountryName" class="tel-num-input__body--item__country-name">{{ data.name }}</span>
-                    </slot>
-
-                    <slot name="item:after" />
+                        <slot name="item:after" />
+                    </div>
                 </div>
             </div>
-        </div>
+        </Transition>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, toRefs, toRef, ref, useTemplateRef, nextTick, watch } from "vue";
+import { computed, toRefs, toRef, ref, onMounted, useTemplateRef, nextTick, watch } from "vue";
+import { onClickOutside } from "@vueuse/core";
 import type { CountryConfig, FlagConfig } from "~/types";
 import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
-
-import { onClickOutside, useVirtualList } from "@vueuse/core";
+import { usePhoneFormat } from "~/composables/usePhoneFormat";
+import { useInit } from "~/composables/useInit";
 
 import FlagIcon from "./FlagIcon.vue";
+
+import metadata from "libphonenumber-js/metadata.min.json";
+import { Metadata } from "libphonenumber-js/core";
 
 const DEFAULT_ITEMS_PER_VIEW = 5;
 
 const emit = defineEmits<{
-    (e: "update:modelValue", value: string): void;
+    (e: "update:modelValue", value: typeof model.value): void;
     (e: "toggle", value: boolean): void;
     (e: "focus"): void;
     (e: "blur"): void;
@@ -108,12 +124,18 @@ const props = withDefaults(
             silent: boolean;
             flag: FlagConfig;
             itemHeight: number;
-            search: {
+            initialValue: string;
+            international: boolean;
+            input: Partial<{
+                mask: boolean;
+                maxLength: number;
+            }>;
+            search: Partial<{
                 hidden: boolean;
-                placeholder?: Record<string, string> | string;
-                locale?: string;
+                placeholder: Record<string, string> | string;
+                locale: string;
                 clearOnSelect: boolean;
-            };
+            }>;
             prefix: {
                 hidden: boolean;
                 hideCode: boolean;
@@ -140,6 +162,11 @@ const props = withDefaults(
         defaultCountryCode: "US",
         disabled: false,
         silent: false,
+        initialValue: "",
+        international: true,
+        input: () => ({
+            mask: true,
+        }),
         prefix: () => ({
             hidden: false,
             hideCode: false,
@@ -171,7 +198,7 @@ const rowSizes = {
     xxl: 56,
 };
 
-const { countryCodes, excludeCountryCodes, defaultCountryCode, silent, locale, placeholder, search, disableSizing, size, list, prefix, itemHeight } = toRefs(props);
+const { countryCodes, excludeCountryCodes, international, input, defaultCountryCode, silent, locale, placeholder, search, disableSizing, size, list, prefix, itemHeight } = toRefs(props);
 const searchLocale = toRef(() => props.search.locale);
 const searchPlaceholder = toRef(() => props.search.placeholder);
 
@@ -179,37 +206,55 @@ const sizeClass = computed(() => (disableSizing.value ? "" : `tel-num-input--${s
 const listHeight = computed(() => (list.value.itemsPerView || DEFAULT_ITEMS_PER_VIEW) * itemHeightComp.value);
 const itemHeightComp = computed(() => itemHeight.value || rowSizes[size.value || "lg"]);
 const selectedCountryIdx = computed(() => filteredCountries.value.findIndex((c) => c.code === model.value.code));
+const needFormat = computed(() => !!props.input?.mask);
 
 const { validCountries, validDefCountryCode, config } = useValidCountries(countryCodes, excludeCountryCodes, defaultCountryCode, silent);
+const { initialData } = useInit(validDefCountryCode, props.initialValue, international.value, silent);
+
 const { placVal } = usePlaceholder(locale, placeholder, silent, "Enter phone number");
 const { placVal: searchPlacVal } = usePlaceholder(searchLocale, searchPlaceholder, silent, "Search...");
 
 const model = ref({
-    iso: validDefCountryCode,
-    name: config[validDefCountryCode.value].name,
-    code: config[validDefCountryCode.value].code,
-    mask: config[validDefCountryCode.value].mask,
+    iso: initialData?.country!.toString() || validDefCountryCode.value,
+    name: config[initialData?.country!].name || config[validDefCountryCode.value].name,
+    code: `+${initialData?.countryCallingCode}` || config[validDefCountryCode.value].code,
+    mask: config[initialData?.country!].mask || config[validDefCountryCode.value].mask,
+    value: initialData ? props.initialValue : "",
     search: "",
     expanded: false,
 });
 
-const filteredCountries = computed(() => {
-    if (!model.value.search) return validCountries.value;
-    return validCountries.value.filter((c) => c.name.toLowerCase().includes(model.value.search.toLowerCase()) || c.code.includes(model.value.search) || c.iso.toLowerCase().includes(model.value.search.toLowerCase()));
+const valueRef = computed({
+    get: () => model.value.value,
+    set: (v: string) => (model.value.value = v),
+});
+const isoRef = computed({
+    get: () => model.value.iso,
+    set: (v: string) => (model.value.iso = v),
 });
 
-// const {
-//     list: items,
-//     containerProps,
-//     wrapperProps,
-// } = useVirtualList(filteredCountries, {
-//     itemHeight: itemHeightComp.value,
-// });
+const filteredCountries = computed(() => {
+    if (!model.value.search) return validCountries.value;
+    const searchLower = model.value.search.toLowerCase();
+
+    return validCountries.value.filter((c) => {
+        const name = c.name.toLowerCase();
+        const code = c.code.toLowerCase();
+        const iso = c.iso.toLowerCase();
+        return name.includes(searchLower) || code.includes(searchLower) || iso.includes(searchLower);
+    });
+});
 
 const telNumInputEl = useTemplateRef<HTMLElement>("telNumInput");
 const scrollListEl = useTemplateRef<HTMLElement>("scrollList");
+const inputEl = useTemplateRef<HTMLInputElement>("inputEl");
+
 onClickOutside(telNumInputEl, () => {
     switchDropdown(false);
+});
+
+onMounted(() => {
+    if (needFormat.value && model.value.value) formatNow();
 });
 
 const switchDropdown = (value?: boolean) => {
@@ -230,10 +275,18 @@ const selectItem = (data: CountryConfig) => {
         expanded: false,
     };
 
-    if (search.value.clearOnSelect) {
-        model.value.search = "";
-    }
+    if (search.value.clearOnSelect) model.value.search = "";
 };
+
+const { setComposing, formatNow } = usePhoneFormat({
+    value: valueRef,
+    iso: isoRef,
+    needFormat,
+    inputEl,
+    onAfterFormat: () => {
+        emit("update:modelValue", model.value);
+    },
+});
 
 watch(
     () => model.value.search,
@@ -374,6 +427,7 @@ watch(
             flex-direction: row;
             align-items: center;
             border-bottom: var(--tel-input-body-item-border, 1px solid #eee);
+            background-color: var(--tel-input-input-bg, #fff);
 
             svg {
                 width: var(--tel-input-icon-size, 16px);
@@ -388,9 +442,9 @@ watch(
                 padding: 0 var(--tel-search-input-padding-x, 12px);
                 border: var(--tel-input-search-border, none);
                 color: var(--tel-input-input-color, #333);
-                background-color: var(--tel-input-input-bg, #fff);
                 font-size: var(--tel-input-font-size, 14px);
                 outline: var(--tel-input-search-outline, none);
+                background-color: transparent;
             }
         }
 
@@ -440,5 +494,15 @@ watch(
             }
         }
     }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
