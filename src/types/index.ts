@@ -1,8 +1,6 @@
 export type CountryConfig = {
-    iso: string;
     name: string;
-    code: string;
-    mask: string;
+    nativeName: string;
 };
 
 export type ConfigType = {

@@ -1,5 +1,5 @@
 <template>
-    <div class="tel-num-input" ref="telNumInput" :class="[sizeClass, { expanded: model.expanded, empty: !filteredCountries.length }]">
+    <div class="tel-num-input" ref="telNumInput" :class="[sizeClass, { expanded: model.expanded, empty: !filteredCountries.length, listHidden: list.hidden }]">
         <div class="tel-num-input__head">
             <div v-if="!prefix.hidden" class="prefix-container" @click="switchDropdown()">
                 <slot name="prefix:before" />
@@ -16,7 +16,7 @@
                     <span v-if="!prefix.hideCountryName" class="prefix-container__country-name">{{ model.name }}</span>
                 </slot>
 
-                <slot name="prefix:chevron">
+                <slot v-if="!list.hidden" name="prefix:chevron">
                     <svg v-if="!prefix.hideChevron" class="prefix-container__chevron" viewBox="0 0 16 16">
                         <path d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
                     </svg>
@@ -56,7 +56,7 @@
                         </slot>
 
                         <slot name="search:input">
-                            <input v-if="!search.hidden" type="text" v-model="model.search" :placeholder="searchPlacVal" />
+                            <input v-if="!search.hidden" ref="searchEl" type="text" v-model="model.search" :placeholder="searchPlacVal" />
                         </slot>
 
                         <slot name="search:after" />
@@ -72,7 +72,7 @@
                         </slot>
 
                         <slot name="item:code">
-                            <span v-if="!list.hideCode" class="tel-num-input__body--item__code">{{ data.code }}</span>
+                            <span v-if="!list.hideCode" class="tel-num-input__body--item__code">{{ getCountryCodeByIso(data.iso) }}</span>
                         </slot>
 
                         <slot name="item:countryName">
@@ -95,11 +95,9 @@ import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
 import { usePhoneFormat } from "~/composables/usePhoneFormat";
 import { useInit } from "~/composables/useInit";
+import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 
 import FlagIcon from "./FlagIcon.vue";
-
-import metadata from "libphonenumber-js/metadata.min.json";
-import { Metadata } from "libphonenumber-js/core";
 
 const DEFAULT_ITEMS_PER_VIEW = 5;
 
@@ -127,7 +125,13 @@ const props = withDefaults(
             initialValue: string;
             international: boolean;
             input: Partial<{
-                mask: boolean;
+                clearOnCountrySelect: boolean;
+                focusAfterCountrySelect: boolean;
+                lockCountryCode: boolean;
+                formatter: Partial<{
+                    enabled: boolean;
+                    formatOnInit: boolean;
+                }>;
                 maxLength: number;
             }>;
             search: Partial<{
@@ -135,15 +139,16 @@ const props = withDefaults(
                 placeholder: Record<string, string> | string;
                 locale: string;
                 clearOnSelect: boolean;
+                autoFocus: boolean;
             }>;
-            prefix: {
+            prefix: Partial<{
                 hidden: boolean;
                 hideCode: boolean;
                 hideFlag: boolean;
                 hideChevron: boolean;
                 hideCountryName: boolean;
-            };
-            list: {
+            }>;
+            list: Partial<{
                 hidden: boolean;
                 hideCode: boolean;
                 hideFlag: boolean;
@@ -151,7 +156,7 @@ const props = withDefaults(
                 hideCountryName: boolean;
                 itemsPerView: number;
                 returnToSelected: boolean;
-            };
+            }>;
         }>
     >(),
     {
@@ -165,7 +170,12 @@ const props = withDefaults(
         initialValue: "",
         international: true,
         input: () => ({
-            mask: true,
+            clearOnCountrySelect: true,
+            focusAfterCountrySelect: true,
+            formatter: {
+                enabled: true,
+                formatOnInit: true,
+            },
         }),
         prefix: () => ({
             hidden: false,
@@ -186,6 +196,7 @@ const props = withDefaults(
         search: () => ({
             hidden: false,
             clearOnSelect: true,
+            autoFocus: true,
         }),
     }
 );
@@ -202,23 +213,24 @@ const { countryCodes, excludeCountryCodes, international, input, defaultCountryC
 const searchLocale = toRef(() => props.search.locale);
 const searchPlaceholder = toRef(() => props.search.placeholder);
 
+const getCountryCodeByIso = (iso: string) => `+${getCountryCallingCode(iso as CountryCode)}`;
+
 const sizeClass = computed(() => (disableSizing.value ? "" : `tel-num-input--${size.value ?? "lg"}`));
 const listHeight = computed(() => (list.value.itemsPerView || DEFAULT_ITEMS_PER_VIEW) * itemHeightComp.value);
 const itemHeightComp = computed(() => itemHeight.value || rowSizes[size.value || "lg"]);
-const selectedCountryIdx = computed(() => filteredCountries.value.findIndex((c) => c.code === model.value.code));
-const needFormat = computed(() => !!props.input?.mask);
+const selectedCountryIdx = computed(() => filteredCountries.value.findIndex((c) => getCountryCodeByIso(c.iso) === model.value.code));
+const needFormat = computed(() => !!input.value?.formatter?.enabled);
 
-const { validCountries, validDefCountryCode, config } = useValidCountries(countryCodes, excludeCountryCodes, defaultCountryCode, silent);
-const { initialData } = useInit(validDefCountryCode, props.initialValue, international.value, silent);
+const { validCountries, defaultIso, config } = useValidCountries(countryCodes, excludeCountryCodes, defaultCountryCode, silent);
+const { initialData } = useInit(defaultIso, props.initialValue, international.value, silent);
 
 const { placVal } = usePlaceholder(locale, placeholder, silent, "Enter phone number");
 const { placVal: searchPlacVal } = usePlaceholder(searchLocale, searchPlaceholder, silent, "Search...");
 
 const model = ref({
-    iso: initialData?.country!.toString() || validDefCountryCode.value,
-    name: config[initialData?.country!].name || config[validDefCountryCode.value].name,
-    code: `+${initialData?.countryCallingCode}` || config[validDefCountryCode.value].code,
-    mask: config[initialData?.country!].mask || config[validDefCountryCode.value].mask,
+    iso: initialData?.country!.toString() || defaultIso.value,
+    name: config[initialData?.country!].name || config[defaultIso.value].name,
+    code: `+${initialData?.countryCallingCode}` || getCountryCodeByIso(defaultIso.value),
     value: initialData ? props.initialValue : "",
     search: "",
     expanded: false,
@@ -239,7 +251,7 @@ const filteredCountries = computed(() => {
 
     return validCountries.value.filter((c) => {
         const name = c.name.toLowerCase();
-        const code = c.code.toLowerCase();
+        const code = getCountryCodeByIso(c.iso).toLowerCase();
         const iso = c.iso.toLowerCase();
         return name.includes(searchLower) || code.includes(searchLower) || iso.includes(searchLower);
     });
@@ -248,13 +260,14 @@ const filteredCountries = computed(() => {
 const telNumInputEl = useTemplateRef<HTMLElement>("telNumInput");
 const scrollListEl = useTemplateRef<HTMLElement>("scrollList");
 const inputEl = useTemplateRef<HTMLInputElement>("inputEl");
+const searchEl = useTemplateRef<HTMLInputElement>("searchEl");
 
 onClickOutside(telNumInputEl, () => {
     switchDropdown(false);
 });
 
 onMounted(() => {
-    if (needFormat.value && model.value.value) formatNow();
+    if (needFormat.value && model.value.value && input.value.formatter?.formatOnInit) formatNow();
 });
 
 const switchDropdown = (value?: boolean) => {
@@ -276,6 +289,8 @@ const selectItem = (data: CountryConfig) => {
     };
 
     if (search.value.clearOnSelect) model.value.search = "";
+    if (input.value.clearOnCountrySelect) model.value.value = "";
+    if (input.value.focusAfterCountrySelect) inputEl.value?.focus();
 };
 
 const { setComposing, formatNow } = usePhoneFormat({
@@ -283,6 +298,7 @@ const { setComposing, formatNow } = usePhoneFormat({
     iso: isoRef,
     needFormat,
     inputEl,
+    international,
     onAfterFormat: () => {
         emit("update:modelValue", model.value);
     },
@@ -292,6 +308,27 @@ watch(
     () => model.value.search,
     () => scrollListEl.value?.scrollTo({ top: 0 })
 );
+
+watch(
+    () => model.value.iso,
+    (newIso) => {
+        if (!newIso) return;
+        const iso = newIso.toUpperCase();
+        const cfg = config[iso];
+        if (!cfg) return;
+
+        model.value = {
+            ...model.value,
+            iso,
+            name: cfg.name,
+            code: getCountryCodeByIso(iso),
+        };
+    }
+);
+
+watch(searchEl, () => {
+    if (search.value.autoFocus && searchEl.value) searchEl.value.focus();
+});
 
 // Development flow:
 // 1. Basic structure: button with code + flag, input for phone number
@@ -318,8 +355,9 @@ watch(
 // user can pass his own placeholder + translates + locale
 // user can pass mask for input
 // user can decide he wants to use mask for input or not
-// is global code or local code
-// user can decide whether to apply default styles or not
+// is global code or local code TODO
+// select code as user type (block dropdown) TODO
+// international format or local format TODO
 
 // props and methods:
 // https://iamstevendao.github.io/vue-tel-input/usage/props.html
@@ -358,6 +396,18 @@ watch(
         }
     }
 
+    &:not(.listHidden) {
+        .prefix-container {
+            &:hover {
+                background-color: #eee;
+            }
+
+            &:active {
+                background-color: #ddd;
+            }
+        }
+    }
+
     &__head {
         display: flex;
         flex-direction: row;
@@ -380,14 +430,6 @@ watch(
             height: 100%;
             font-size: var(--tel-input-font-size, 14px);
             gap: var(--tel-input-prefix-gap, 8px);
-
-            &:hover {
-                background-color: #eee;
-            }
-
-            &:active {
-                background-color: #ddd;
-            }
 
             &__chevron {
                 width: var(--tel-input-icon-size, 12px);

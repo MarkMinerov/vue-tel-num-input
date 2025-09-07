@@ -33,11 +33,11 @@ export const useValidCountries = (refCountryCodes: Ref<string[]>, excludeCountry
 
     const validCountries = computed(() => validCountryCodes.value.map((code: string) => ({ ...config[code], iso: code })));
 
-    const validDefCountryCode = computed(() => {
+    const defaultIso = computed(() => {
         const defCode = defCountryCode.value?.toUpperCase();
         if (!defCode || !isoCodes.includes(defCode)) return "US";
         return defCode;
     });
 
-    return { isoCodes, validCountries, validDefCountryCode, config };
+    return { isoCodes, validCountries, defaultIso, config };
 };

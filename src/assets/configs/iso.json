@@ -1,1222 +1,240 @@
 {
-    "AF": {
-        "name": "Afghanistan",
-        "code": "+93",
-        "mask": "##-###-####"
-    },
-    "AX": {
-        "name": "Aland Islands",
-        "code": "+358",
-        "mask": "(###)###-##-##"
-    },
-    "AL": {
-        "name": "Albania",
-        "code": "+355",
-        "mask": "(###)###-###"
-    },
-    "DZ": {
-        "name": "Algeria",
-        "code": "+213",
-        "mask": "##-###-####"
-    },
-    "AS": {
-        "name": "American Samoa",
-        "code": "+1",
-        "mask": "(684)###-####"
-    },
-    "AD": {
-        "name": "Andorra",
-        "code": "+376",
-        "mask": "###-###"
-    },
-    "AO": {
-        "name": "Angola",
-        "code": "+244",
-        "mask": "(###)###-###"
-    },
-    "AI": {
-        "name": "Anguilla",
-        "code": "+1",
-        "mask": "(264)###-####"
-    },
-    "AQ": {
-        "name": "Antarctica",
-        "code": "+672",
-        "mask": "1##-###"
-    },
-    "AG": {
-        "name": "Antigua and Barbuda",
-        "code": "+1",
-        "mask": "(268)###-####"
-    },
-    "AR": {
-        "name": "Argentina",
-        "code": "+54",
-        "mask": "(###)###-####"
-    },
-    "AM": {
-        "name": "Armenia",
-        "code": "+374",
-        "mask": "##-###-###"
-    },
-    "AW": {
-        "name": "Aruba",
-        "code": "+297",
-        "mask": "###-####"
-    },
-    "AC": {
-        "name": "Ascension Island",
-        "code": "+247",
-        "mask": "####"
-    },
-    "AU": {
-        "name": "Australia",
-        "code": "+61",
-        "mask": "#-####-####"
-    },
-    "AT": {
-        "name": "Austria",
-        "code": "+43",
-        "mask": "(###)###-####"
-    },
-    "AZ": {
-        "name": "Azerbaijan",
-        "code": "+994",
-        "mask": "##-###-##-##"
-    },
-    "BS": {
-        "name": "Bahamas",
-        "code": "+1",
-        "mask": "(242)###-####"
-    },
-    "BH": {
-        "name": "Bahrain",
-        "code": "+973",
-        "mask": "####-####"
-    },
-    "BD": {
-        "name": "Bangladesh",
-        "code": "+880",
-        "mask": "1###-######"
-    },
-    "BB": {
-        "name": "Barbados",
-        "code": "+1",
-        "mask": "(246)###-####"
-    },
-    "BY": {
-        "name": "Belarus",
-        "code": "+375",
-        "mask": "(##)###-##-##"
-    },
-    "BE": {
-        "name": "Belgium",
-        "code": "+32",
-        "mask": "(###)###-###"
-    },
-    "BZ": {
-        "name": "Belize",
-        "code": "+501",
-        "mask": "###-####"
-    },
-    "BJ": {
-        "name": "Benin",
-        "code": "+229",
-        "mask": "##-##-####"
-    },
-    "BM": {
-        "name": "Bermuda",
-        "code": "+1",
-        "mask": "(441)###-####"
-    },
-    "BT": {
-        "name": "Bhutan",
-        "code": "+975",
-        "mask": ["17-###-###", "77-###-###", "#-###-###"]
-    },
-    "BO": {
-        "name": "Bolivia",
-        "code": "+591",
-        "mask": "#-###-####"
-    },
-    "BA": {
-        "name": "Bosnia and Herzegovina",
-        "code": "+387",
-        "mask": ["##-####", "##-#####"]
-    },
-    "BW": {
-        "name": "Botswana",
-        "code": "+267",
-        "mask": "##-###-###"
-    },
-    "BR": {
-        "name": "Brazil",
-        "code": "+55",
-        "mask": ["(##)####-####", "(##)#####-####"]
-    },
-    "IO": {
-        "name": "British Indian Ocean Territory",
-        "code": "+246",
-        "mask": "###-####"
-    },
-    "BN": {
-        "name": "Brunei Darussalam",
-        "code": "+673",
-        "mask": "###-####"
-    },
-    "BG": {
-        "name": "Bulgaria",
-        "code": "+359",
-        "mask": "(###)###-###"
-    },
-    "BF": {
-        "name": "Burkina Faso",
-        "code": "+226",
-        "mask": "##-##-####"
-    },
-    "BI": {
-        "name": "Burundi",
-        "code": "+257",
-        "mask": "##-##-####"
-    },
-    "KH": {
-        "name": "Cambodia",
-        "code": "+855",
-        "mask": "##-###-###"
-    },
-    "CM": {
-        "name": "Cameroon",
-        "code": "+237",
-        "mask": "####-####"
-    },
-    "CA": {
-        "name": "Canada",
-        "code": "+1",
-        "mask": "(###)###-####"
-    },
-    "CV": {
-        "name": "Cape Verde",
-        "code": "+238",
-        "mask": "(###)##-##"
-    },
-    "KY": {
-        "name": "Cayman Islands",
-        "code": "+1",
-        "mask": "(345)###-####"
-    },
-    "CF": {
-        "name": "Central African Republic",
-        "code": "+236",
-        "mask": "##-##-####"
-    },
-    "TD": {
-        "name": "Chad",
-        "code": "+235",
-        "mask": "##-##-##-##"
-    },
-    "CL": {
-        "name": "Chile",
-        "code": "+56",
-        "mask": "#-####-####"
-    },
-    "CN": {
-        "name": "China",
-        "code": "+86",
-        "mask": ["(###)####-###", "(###)####-####", "##-#####-#####"]
-    },
-    "CX": {
-        "name": "Christmas Island",
-        "code": "+61",
-        "mask": "#-####-####"
-    },
-    "CC": {
-        "name": "Cocos (Keeling) Islands",
-        "code": "+61",
-        "mask": "#-####-####"
-    },
-    "CO": {
-        "name": "Colombia",
-        "code": "+57",
-        "mask": "(###)###-####"
-    },
-    "KM": {
-        "name": "Comoros",
-        "code": "+269",
-        "mask": "##-#####"
-    },
-    "CG": {
-        "name": "Congo",
-        "code": "+242",
-        "mask": "##-#####"
-    },
-    "CK": {
-        "name": "Cook Islands",
-        "code": "+682",
-        "mask": "##-###"
-    },
-    "CR": {
-        "name": "Costa Rica",
-        "code": "+506",
-        "mask": "####-####"
-    },
-    "HR": {
-        "name": "Croatia",
-        "code": "+385",
-        "mask": "##-###-###"
-    },
-    "CU": {
-        "name": "Cuba",
-        "code": "+53",
-        "mask": "#-###-####"
-    },
-    "CY": {
-        "name": "Cyprus",
-        "code": "+357",
-        "mask": "##-###-###"
-    },
-    "CZ": {
-        "name": "Czech Republic",
-        "code": "+420",
-        "mask": "(###)###-###"
-    },
-    "CD": {
-        "name": "Democratic Republic of the Congo",
-        "code": "+243",
-        "mask": "(###)###-###"
-    },
-    "DK": {
-        "name": "Denmark",
-        "code": "+45",
-        "mask": "##-##-##-##"
-    },
-    "DJ": {
-        "name": "Djibouti",
-        "code": "+253",
-        "mask": "##-##-##-##"
-    },
-    "DM": {
-        "name": "Dominica",
-        "code": "+1",
-        "mask": "(767)###-####"
-    },
-    "DO": {
-        "name": "Dominican Republic",
-        "code": "+1",
-        "mask": ["(809)###-####", "(829)###-####", "(849)###-####"]
-    },
-    "EC": {
-        "name": "Ecuador",
-        "code": "+593",
-        "mask": ["#-###-####", "##-###-####"]
-    },
-    "EG": {
-        "name": "Egypt",
-        "code": "+20",
-        "mask": "(###)###-####"
-    },
-    "SV": {
-        "name": "El Salvador",
-        "code": "+503",
-        "mask": "##-##-####"
-    },
-    "GQ": {
-        "name": "Equatorial Guinea",
-        "code": "+240",
-        "mask": "##-###-####"
-    },
-    "ER": {
-        "name": "Eritrea",
-        "code": "+291",
-        "mask": "#-###-###"
-    },
-    "EE": {
-        "name": "Estonia",
-        "code": "+372",
-        "mask": ["###-####", "####-####"]
-    },
-    "SZ": {
-        "name": "Eswatini",
-        "code": "+268",
-        "mask": "##-##-####"
-    },
-    "ET": {
-        "name": "Ethiopia",
-        "code": "+251",
-        "mask": "##-###-####"
-    },
-    "FK": {
-        "name": "Falkland Islands (Malvinas)",
-        "code": "+500",
-        "mask": "#####"
-    },
-    "FO": {
-        "name": "Faroe Islands",
-        "code": "+298",
-        "mask": "## ## ##"
-    },
-    "FJ": {
-        "name": "Fiji",
-        "code": "+679",
-        "mask": "##-#####"
-    },
-    "FI": {
-        "name": "Finland",
-        "code": "+358",
-        "mask": "## ### ####"
-    },
-    "FR": {
-        "name": "France",
-        "code": "+33",
-        "mask": "# ## ## ## ##"
-    },
-    "GF": {
-        "name": "French Guiana",
-        "code": "+594",
-        "mask": "### ## ## ##"
-    },
-    "PF": {
-        "name": "French Polynesia",
-        "code": "+689",
-        "mask": "## ## ## ##"
-    },
-    "GA": {
-        "name": "Gabon",
-        "code": "+241",
-        "mask": "# ## ## ##"
-    },
-    "GM": {
-        "name": "Gambia",
-        "code": "+220",
-        "mask": "### ####"
-    },
-    "GE": {
-        "name": "Georgia",
-        "code": "+995",
-        "mask": "(###)###-###"
-    },
-    "DE": {
-        "name": "Germany",
-        "code": "+49",
-        "mask": ["###-###", "(##) ####-####", "(###) ####-####", "(####) ###-####", "(3####) ##-####"]
-    },
-    "GH": {
-        "name": "Ghana",
-        "code": "+233",
-        "mask": "03# ### ####"
-    },
-    "GI": {
-        "name": "Gibraltar",
-        "code": "+350",
-        "mask": "###-#####"
-    },
-    "GR": {
-        "name": "Greece",
-        "code": "+30",
-        "mask": "(###)###-####"
-    },
-    "GL": {
-        "name": "Greenland",
-        "code": "+299",
-        "mask": "##-##-##"
-    },
-    "GD": {
-        "name": "Grenada",
-        "code": "+1",
-        "mask": "(473)###-####"
-    },
-    "GP": {
-        "name": "Guadeloupe",
-        "code": "+590",
-        "mask": "### ## ## ##"
-    },
-    "GU": {
-        "name": "Guam",
-        "code": "+1",
-        "mask": "671 ### ####"
-    },
-    "GT": {
-        "name": "Guatemala",
-        "code": "+502",
-        "mask": "#-###-####"
-    },
-    "GG": {
-        "name": "Guernsey",
-        "code": "+44",
-        "mask": "(####)######"
-    },
-    "GN": {
-        "name": "Guinea",
-        "code": "+224",
-        "mask": "##-###-###"
-    },
-    "GW": {
-        "name": "Guinea-Bissau",
-        "code": "+245",
-        "mask": "#-######"
-    },
-    "GY": {
-        "name": "Guyana",
-        "code": "+592",
-        "mask": "###-####"
-    },
-    "HT": {
-        "name": "Haiti",
-        "code": "+509",
-        "mask": "##-##-####"
-    },
-    "VA": {
-        "name": "Holy See (Vatican City State)",
-        "code": "+39",
-        "mask": "06 698#####"
-    },
-    "HN": {
-        "name": "Honduras",
-        "code": "+504",
-        "mask": "####-####"
-    },
-    "HK": {
-        "name": "Hong Kong",
-        "code": "+852",
-        "mask": "####-####"
-    },
-    "HU": {
-        "name": "Hungary",
-        "code": "+36",
-        "mask": "## ### ####"
-    },
-    "IS": {
-        "name": "Iceland",
-        "code": "+354",
-        "mask": "###-####"
-    },
-    "IN": {
-        "name": "India",
-        "code": "+91",
-        "mask": "(####)###-###"
-    },
-    "ID": {
-        "name": "Indonesia",
-        "code": "+62",
-        "mask": ["##-###-##", "##-###-###", "##-###-####", "(8##)###-###", "(8##)###-##-###"]
-    },
-    "IR": {
-        "name": "Iran",
-        "code": "+98",
-        "mask": "(###)###-####"
-    },
-    "IQ": {
-        "name": "Iraq",
-        "code": "+964",
-        "mask": "(###)###-####"
-    },
-    "IE": {
-        "name": "Ireland",
-        "code": "+353",
-        "mask": "(###)###-###"
-    },
-    "IM": {
-        "name": "Isle of Man",
-        "code": "+44",
-        "mask": "(####)######"
-    },
-    "IL": {
-        "name": "Israel",
-        "code": "+972",
-        "mask": ["#-###-####", "5#-###-####"]
-    },
-    "IT": {
-        "name": "Italy",
-        "code": "+39",
-        "mask": "(###)####-###"
-    },
-    "CI": {
-        "name": "Ivory Coast / Cote d'Ivoire",
-        "code": "+225",
-        "mask": "##-###-###"
-    },
-    "JM": {
-        "name": "Jamaica",
-        "code": "+1",
-        "mask": "(876)###-####"
-    },
-    "JP": {
-        "name": "Japan",
-        "code": "+81",
-        "mask": ["(###)###-###", "##-####-####"]
-    },
-    "JE": {
-        "name": "Jersey",
-        "code": "+44",
-        "mask": "(####)####-######"
-    },
-    "JO": {
-        "name": "Jordan",
-        "code": "+962",
-        "mask": "#-####-####"
-    },
-    "KZ": {
-        "name": "Kazakhstan",
-        "code": "+77",
-        "mask": ["(###) ### ## ##", "(####) ## ## ##", "(#####) # ## ##"]
-    },
-    "KE": {
-        "name": "Kenya",
-        "code": "+254",
-        "mask": "###-######"
-    },
-    "KI": {
-        "name": "Kiribati",
-        "code": "+686",
-        "mask": "##-###"
-    },
-    "KP": {
-        "name": "Korea, Democratic People's Republic of Korea",
-        "code": "+850",
-        "mask": ["###-###", "####-####", "##-###-###", "###-####-###", "191-###-####", "####-#############"]
-    },
-    "KR": {
-        "name": "Korea, Republic of South Korea",
-        "code": "+82",
-        "mask": "##-###-####"
-    },
-    "XK": {
-        "name": "Kosovo",
-        "code": "+383",
-        "mask": ["##-###-###", "###-###-###"]
-    },
-    "KW": {
-        "name": "Kuwait",
-        "code": "+965",
-        "mask": "####-####"
-    },
-    "KG": {
-        "name": "Kyrgyzstan",
-        "code": "+996",
-        "mask": "(###)###-###"
-    },
-    "LA": {
-        "name": "Laos",
-        "code": "+856",
-        "mask": ["##-###-###", "(20##)###-###"]
-    },
-    "LV": {
-        "name": "Latvia",
-        "code": "+371",
-        "mask": "##-###-###"
-    },
-    "LB": {
-        "name": "Lebanon",
-        "code": "+961",
-        "mask": ["#-###-###", "##-###-###"]
-    },
-    "LS": {
-        "name": "Lesotho",
-        "code": "+266",
-        "mask": "#-###-####"
-    },
-    "LR": {
-        "name": "Liberia",
-        "code": "+231",
-        "mask": "##-###-###"
-    },
-    "LY": {
-        "name": "Libya",
-        "code": "+218",
-        "mask": ["##-###-###", "21-###-####"]
-    },
-    "LI": {
-        "name": "Liechtenstein",
-        "code": "+423",
-        "mask": "(###)###-####"
-    },
-    "LT": {
-        "name": "Lithuania",
-        "code": "+370",
-        "mask": "(###)##-###"
-    },
-    "LU": {
-        "name": "Luxembourg",
-        "code": "+352",
-        "mask": "(###)###-###"
-    },
-    "MO": {
-        "name": "Macau",
-        "code": "+853",
-        "mask": "####-####"
-    },
-    "MG": {
-        "name": "Madagascar",
-        "code": "+261",
-        "mask": "##-##-#####"
-    },
-    "MW": {
-        "name": "Malawi",
-        "code": "+265",
-        "mask": ["1-###-###", "#-####-####"]
-    },
-    "MY": {
-        "name": "Malaysia",
-        "code": "+60",
-        "mask": ["#-###-###", "##-###-###", "(###)###-###", "##-###-####"]
-    },
-    "MV": {
-        "name": "Maldives",
-        "code": "+960",
-        "mask": "###-####"
-    },
-    "ML": {
-        "name": "Mali",
-        "code": "+223",
-        "mask": "##-##-####"
-    },
-    "MT": {
-        "name": "Malta",
-        "code": "+356",
-        "mask": "####-####"
-    },
-    "MH": {
-        "name": "Marshall Islands",
-        "code": "+692",
-        "mask": "###-####"
-    },
-    "MQ": {
-        "name": "Martinique",
-        "code": "+596",
-        "mask": "(###)##-##-##"
-    },
-    "MR": {
-        "name": "Mauritania",
-        "code": "+222",
-        "mask": "##-##-####"
-    },
-    "MU": {
-        "name": "Mauritius",
-        "code": "+230",
-        "mask": "###-####"
-    },
-    "YT": {
-        "name": "Mayotte",
-        "code": "+262",
-        "mask": "#####-####"
-    },
-    "MX": {
-        "name": "Mexico",
-        "code": "+52",
-        "mask": ["##-##-####", "(###)###-####"]
-    },
-    "FM": {
-        "name": "Micronesia, Federated States of Micronesia",
-        "code": "+691",
-        "mask": "###-####"
-    },
-    "MD": {
-        "name": "Moldova",
-        "code": "+373",
-        "mask": "####-####"
-    },
-    "MC": {
-        "name": "Monaco",
-        "code": "+377",
-        "mask": ["##-###-###", "(###)###-###"]
-    },
-    "MN": {
-        "name": "Mongolia",
-        "code": "+976",
-        "mask": "##-##-####"
-    },
-    "ME": {
-        "name": "Montenegro",
-        "code": "+382",
-        "mask": "##-###-###"
-    },
-    "MS": {
-        "name": "Montserrat",
-        "code": "+1",
-        "mask": "(664)###-####"
-    },
-    "MA": {
-        "name": "Morocco",
-        "code": "+212",
-        "mask": "##-####-###"
-    },
-    "MZ": {
-        "name": "Mozambique",
-        "code": "+258",
-        "mask": "##-###-###"
-    },
-    "MM": {
-        "name": "Myanmar",
-        "code": "+95",
-        "mask": ["###-###", "#-###-###", "##-###-###"]
-    },
-    "NA": {
-        "name": "Namibia",
-        "code": "+264",
-        "mask": "##-###-####"
-    },
-    "NR": {
-        "name": "Nauru",
-        "code": "+674",
-        "mask": "###-####"
-    },
-    "NP": {
-        "name": "Nepal",
-        "code": "+977",
-        "mask": "##-###-###"
-    },
-    "NL": {
-        "name": "Netherlands",
-        "code": "+31",
-        "mask": "##-###-####"
-    },
-    "NC": {
-        "name": "New Caledonia",
-        "code": "+687",
-        "mask": "##-####"
-    },
-    "NZ": {
-        "name": "New Zealand",
-        "code": "+64",
-        "mask": ["#-###-###", "(###)###-###", "(###)###-####"]
-    },
-    "NI": {
-        "name": "Nicaragua",
-        "code": "+505",
-        "mask": "####-####"
-    },
-    "NE": {
-        "name": "Niger",
-        "code": "+227",
-        "mask": "##-##-####"
-    },
-    "NG": {
-        "name": "Nigeria",
-        "code": "+234",
-        "mask": ["##-###-##", "##-###-###", "(###)###-####"]
-    },
-    "NU": {
-        "name": "Niue",
-        "code": "+683",
-        "mask": "####"
-    },
-    "NF": {
-        "name": "Norfolk Island",
-        "code": "+672",
-        "mask": "3##-###"
-    },
-    "MK": {
-        "name": "North Macedonia",
-        "code": "+389",
-        "mask": "##-###-###"
-    },
-    "MP": {
-        "name": "Northern Mariana Islands",
-        "code": "+1",
-        "mask": "(670)###-####"
-    },
-    "NO": {
-        "name": "Norway",
-        "code": "+47",
-        "mask": "(###)##-###"
-    },
-    "OM": {
-        "name": "Oman",
-        "code": "+968",
-        "mask": "##-###-###"
-    },
-    "PK": {
-        "name": "Pakistan",
-        "code": "+92",
-        "mask": "(###)###-####"
-    },
-    "PW": {
-        "name": "Palau",
-        "code": "+680",
-        "mask": "###-####"
-    },
-    "PS": {
-        "name": "Palestine",
-        "code": "+970",
-        "mask": "##-###-####"
-    },
-    "PA": {
-        "name": "Panama",
-        "code": "+507",
-        "mask": "###-####"
-    },
-    "PG": {
-        "name": "Papua New Guinea",
-        "code": "+675",
-        "mask": "(###)##-###"
-    },
-    "PY": {
-        "name": "Paraguay",
-        "code": "+595",
-        "mask": "(###)###-###"
-    },
-    "PE": {
-        "name": "Peru",
-        "code": "+51",
-        "mask": "(###)###-###"
-    },
-    "PH": {
-        "name": "Philippines",
-        "code": "+63",
-        "mask": "(###)###-####"
-    },
-    "PN": {
-        "name": "Pitcairn",
-        "code": "+870",
-        "mask": "###-###-###"
-    },
-    "PL": {
-        "name": "Poland",
-        "code": "+48",
-        "mask": "(###)###-###"
-    },
-    "PT": {
-        "name": "Portugal",
-        "code": "+351",
-        "mask": "##-###-####"
-    },
-    "PR": {
-        "name": "Puerto Rico",
-        "code": "+1",
-        "mask": ["(787) ### ####", "(939) ### ####"]
-    },
-    "QA": {
-        "name": "Qatar",
-        "code": "+974",
-        "mask": "####-####"
-    },
-    "RE": {
-        "name": "Reunion",
-        "code": "+262",
-        "mask": "#####-####"
-    },
-    "RO": {
-        "name": "Romania",
-        "code": "+40",
-        "mask": "##-###-####"
-    },
-    "RU": {
-        "name": "Russia",
-        "code": "+7",
-        "mask": "(###)###-##-##"
-    },
-    "RW": {
-        "name": "Rwanda",
-        "code": "+250",
-        "mask": "(###)###-###"
-    },
-    "BL": {
-        "name": "Saint Barthelemy",
-        "code": "+590",
-        "mask": "###-##-##-##"
-    },
-    "SH": {
-        "name": "Saint Helena, Ascension and Tristan Da Cunha",
-        "code": "+290",
-        "mask": "####"
-    },
-    "KN": {
-        "name": "Saint Kitts and Nevis",
-        "code": "+1",
-        "mask": "(869)###-####"
-    },
-    "LC": {
-        "name": "Saint Lucia",
-        "code": "+1",
-        "mask": "(758)###-####"
-    },
-    "MF": {
-        "name": "Saint Martin",
-        "code": "+590",
-        "mask": "(###)###-###"
-    },
-    "PM": {
-        "name": "Saint Pierre and Miquelon",
-        "code": "+508",
-        "mask": "##-####"
-    },
-    "VC": {
-        "name": "Saint Vincent and the Grenadines",
-        "code": "+1",
-        "mask": "(784)###-####"
-    },
-    "WS": {
-        "name": "Samoa",
-        "code": "+685",
-        "mask": "##-####"
-    },
-    "SM": {
-        "name": "San Marino",
-        "code": "+378",
-        "mask": "####-######"
-    },
-    "ST": {
-        "name": "Sao Tome and Principe",
-        "code": "+239",
-        "mask": "##-#####"
-    },
-    "SA": {
-        "name": "Saudi Arabia",
-        "code": "+966",
-        "mask": ["#-###-####", "5#-####-####"]
-    },
-    "SN": {
-        "name": "Senegal",
-        "code": "+221",
-        "mask": "##-###-####"
-    },
-    "RS": {
-        "name": "Serbia",
-        "code": "+381",
-        "mask": "##-###-####"
-    },
-    "SC": {
-        "name": "Seychelles",
-        "code": "+248",
-        "mask": "#-###-###"
-    },
-    "SL": {
-        "name": "Sierra Leone",
-        "code": "+232",
-        "mask": "##-######"
-    },
-    "SG": {
-        "name": "Singapore",
-        "code": "+65",
-        "mask": "####-####"
-    },
-    "SX": {
-        "name": "Sint Maarten",
-        "code": "+1",
-        "mask": "(721)###-####"
-    },
-    "SK": {
-        "name": "Slovakia",
-        "code": "+421",
-        "mask": "(###)###-###"
-    },
-    "SI": {
-        "name": "Slovenia",
-        "code": "+386",
-        "mask": "##-###-###"
-    },
-    "SB": {
-        "name": "Solomon Islands",
-        "code": "+677",
-        "mask": ["#####", "###-####"]
-    },
-    "SO": {
-        "name": "Somalia",
-        "code": "+252",
-        "mask": ["#-###-###", "##-###-###"]
-    },
-    "ZA": {
-        "name": "South Africa",
-        "code": "+27",
-        "mask": "##-###-####"
-    },
-    "GS": {
-        "name": "South Georgia and the South Sandwich Islands",
-        "code": "+500",
-        "mask": "#####"
-    },
-    "SS": {
-        "name": "South Sudan",
-        "code": "+211",
-        "mask": "##-###-####"
-    },
-    "ES": {
-        "name": "Spain",
-        "code": "+34",
-        "mask": "(###)###-###"
-    },
-    "LK": {
-        "name": "Sri Lanka",
-        "code": "+94",
-        "mask": "##-###-####"
-    },
-    "SD": {
-        "name": "Sudan",
-        "code": "+249",
-        "mask": "##-###-####"
-    },
-    "SR": {
-        "name": "Suriname",
-        "code": "+597",
-        "mask": ["###-###", "###-####"]
-    },
-    "SJ": {
-        "name": "Svalbard and Jan Mayen",
-        "code": "+47",
-        "mask": "(###)##-###"
-    },
-    "SE": {
-        "name": "Sweden",
-        "code": "+46",
-        "mask": "##-###-####"
-    },
-    "CH": {
-        "name": "Switzerland",
-        "code": "+41",
-        "mask": "##-###-####"
-    },
-    "SY": {
-        "name": "Syrian Arab Republic",
-        "code": "+963",
-        "mask": "##-####-###"
-    },
-    "TW": {
-        "name": "Taiwan",
-        "code": "+886",
-        "mask": ["####-####", "#-####-####"]
-    },
-    "TJ": {
-        "name": "Tajikistan",
-        "code": "+992",
-        "mask": "##-###-####"
-    },
-    "TZ": {
-        "name": "Tanzania, United Republic of Tanzania",
-        "code": "+255",
-        "mask": "##-###-####"
-    },
-    "TH": {
-        "name": "Thailand",
-        "code": "+66",
-        "mask": ["##-###-###", "##-###-####"]
-    },
-    "TL": {
-        "name": "Timor-Leste",
-        "code": "+670",
-        "mask": ["###-####", "77#-#####", "78#-#####"]
-    },
-    "TG": {
-        "name": "Togo",
-        "code": "+228",
-        "mask": "##-###-###"
-    },
-    "TK": {
-        "name": "Tokelau",
-        "code": "+690",
-        "mask": "####"
-    },
-    "TO": {
-        "name": "Tonga",
-        "code": "+676",
-        "mask": "#####"
-    },
-    "TT": {
-        "name": "Trinidad and Tobago",
-        "code": "+1",
-        "mask": "(868)###-####"
-    },
-    "TN": {
-        "name": "Tunisia",
-        "code": "+216",
-        "mask": "##-###-###"
-    },
-    "TR": {
-        "name": "Turkey",
-        "code": "+90",
-        "mask": "(###)###-####"
-    },
-    "TM": {
-        "name": "Turkmenistan",
-        "code": "+993",
-        "mask": "#-###-####"
-    },
-    "TC": {
-        "name": "Turks and Caicos Islands",
-        "code": "+1",
-        "mask": "(249)###-###"
-    },
-    "TV": {
-        "name": "Tuvalu",
-        "code": "+688",
-        "mask": ["2####", "90####"]
-    },
-    "UG": {
-        "name": "Uganda",
-        "code": "+256",
-        "mask": "(###)###-###"
-    },
-    "UA": {
-        "name": "Ukraine",
-        "code": "+380",
-        "mask": "(##)###-##-##"
-    },
-    "AE": {
-        "name": "United Arab Emirates",
-        "code": "+971",
-        "mask": ["#-###-####", "5#-###-####"]
-    },
-    "GB": {
-        "name": "United Kingdom",
-        "code": "+44",
-        "mask": "##-####-####"
-    },
-    "US": {
-        "name": "United States",
-        "code": "+1",
-        "mask": "(###)###-####"
-    },
-    "UY": {
-        "name": "Uruguay",
-        "code": "+598",
-        "mask": "#-###-##-##"
-    },
-    "UZ": {
-        "name": "Uzbekistan",
-        "code": "+998",
-        "mask": "##-###-####"
-    },
-    "VU": {
-        "name": "Vanuatu",
-        "code": "+678",
-        "mask": ["#####", "##-#####"]
-    },
-    "VE": {
-        "name": "Venezuela, Bolivarian Republic of Venezuela",
-        "code": "+58",
-        "mask": "(###)###-####"
-    },
-    "VN": {
-        "name": "Vietnam",
-        "code": "+84",
-        "mask": ["##-####-###", "(###)####-###"]
-    },
-    "VG": {
-        "name": "Virgin Islands, British",
-        "code": "+1",
-        "mask": "(284)###-####"
-    },
-    "VI": {
-        "name": "Virgin Islands, U.S.",
-        "code": "+1",
-        "mask": "(340)###-####"
-    },
-    "WF": {
-        "name": "Wallis and Futuna",
-        "code": "+681",
-        "mask": "##-####"
-    },
-    "YE": {
-        "name": "Yemen",
-        "code": "+967",
-        "mask": ["#-###-###", "##-###-###", "###-###-###"]
-    },
-    "ZM": {
-        "name": "Zambia",
-        "code": "+260",
-        "mask": "##-###-####"
-    },
-    "ZW": {
-        "name": "Zimbabwe",
-        "code": "+263",
-        "mask": "#-######"
-    }
+    "AF": { "name": "Afghanistan", "nativeName": "افغانستان" },
+    "AX": { "name": "Aland Islands", "nativeName": "Åland" },
+    "AL": { "name": "Albania", "nativeName": "Shqipëria" },
+    "DZ": { "name": "Algeria", "nativeName": "الجزائر" },
+    "AS": { "name": "American Samoa", "nativeName": "Amerika Sāmoa" },
+    "AD": { "name": "Andorra", "nativeName": "Andorra" },
+    "AO": { "name": "Angola", "nativeName": "Angola" },
+    "AI": { "name": "Anguilla", "nativeName": "Anguilla" },
+    "AG": { "name": "Antigua and Barbuda", "nativeName": "Antigua and Barbuda" },
+    "AR": { "name": "Argentina", "nativeName": "Argentina" },
+    "AM": { "name": "Armenia", "nativeName": "Հայաստան" },
+    "AW": { "name": "Aruba", "nativeName": "Aruba" },
+    "AC": { "name": "Ascension Island", "nativeName": "Ascension Island" },
+    "AU": { "name": "Australia", "nativeName": "Australia" },
+    "AT": { "name": "Austria", "nativeName": "Österreich" },
+    "AZ": { "name": "Azerbaijan", "nativeName": "Azərbaycan" },
+
+    "BS": { "name": "Bahamas", "nativeName": "Bahamas" },
+    "BH": { "name": "Bahrain", "nativeName": "البحرين" },
+    "BD": { "name": "Bangladesh", "nativeName": "বাংলাদেশ" },
+    "BB": { "name": "Barbados", "nativeName": "Barbados" },
+    "BY": { "name": "Belarus", "nativeName": "Беларусь" },
+    "BE": { "name": "Belgium", "nativeName": "België" },
+    "BZ": { "name": "Belize", "nativeName": "Belize" },
+    "BJ": { "name": "Benin", "nativeName": "Bénin" },
+    "BM": { "name": "Bermuda", "nativeName": "Bermuda" },
+    "BT": { "name": "Bhutan", "nativeName": "འབྲུག" },
+    "BO": { "name": "Bolivia", "nativeName": "Bolivia" },
+    "BA": { "name": "Bosnia and Herzegovina", "nativeName": "Босна и Херцеговина" },
+    "BW": { "name": "Botswana", "nativeName": "Botswana" },
+    "BR": { "name": "Brazil", "nativeName": "Brasil" },
+    "IO": { "name": "British Indian Ocean Territory", "nativeName": "British Indian Ocean Territory" },
+    "BN": { "name": "Brunei Darussalam", "nativeName": "Brunei" },
+    "BG": { "name": "Bulgaria", "nativeName": "България" },
+    "BF": { "name": "Burkina Faso", "nativeName": "Burkina Faso" },
+    "BI": { "name": "Burundi", "nativeName": "Uburundi" },
+
+    "KH": { "name": "Cambodia", "nativeName": "កម្ពុជា" },
+    "CM": { "name": "Cameroon", "nativeName": "Cameroun" },
+    "CA": { "name": "Canada", "nativeName": "Canada" },
+    "CV": { "name": "Cape Verde", "nativeName": "Cabo Verde" },
+    "KY": { "name": "Cayman Islands", "nativeName": "Cayman Islands" },
+    "CF": { "name": "Central African Republic", "nativeName": "République centrafricaine" },
+    "TD": { "name": "Chad", "nativeName": "Tchad" },
+    "CL": { "name": "Chile", "nativeName": "Chile" },
+    "CN": { "name": "China", "nativeName": "中国" },
+    "CX": { "name": "Christmas Island", "nativeName": "Christmas Island" },
+    "CC": { "name": "Cocos (Keeling) Islands", "nativeName": "Cocos (Keeling) Islands" },
+    "CO": { "name": "Colombia", "nativeName": "Colombia" },
+    "KM": { "name": "Comoros", "nativeName": "القمر‎" },
+    "CG": { "name": "Congo", "nativeName": "Congo" },
+    "CD": { "name": "Democratic Republic of the Congo", "nativeName": "République démocratique du Congo" },
+    "CK": { "name": "Cook Islands", "nativeName": "Kūki 'Āirani" },
+    "CR": { "name": "Costa Rica", "nativeName": "Costa Rica" },
+    "CI": { "name": "Ivory Coast", "nativeName": "Côte d’Ivoire" },
+    "HR": { "name": "Croatia", "nativeName": "Hrvatska" },
+    "CU": { "name": "Cuba", "nativeName": "Cuba" },
+    "CY": { "name": "Cyprus", "nativeName": "Κύπρος" },
+    "CZ": { "name": "Czech Republic", "nativeName": "Česko" },
+
+    "DK": { "name": "Denmark", "nativeName": "Danmark" },
+    "DJ": { "name": "Djibouti", "nativeName": "جيبوتي" },
+    "DM": { "name": "Dominica", "nativeName": "Dominica" },
+    "DO": { "name": "Dominican Republic", "nativeName": "República Dominicana" },
+
+    "EC": { "name": "Ecuador", "nativeName": "Ecuador" },
+    "EG": { "name": "Egypt", "nativeName": "مصر" },
+    "SV": { "name": "El Salvador", "nativeName": "El Salvador" },
+    "GQ": { "name": "Equatorial Guinea", "nativeName": "Guinea Ecuatorial" },
+    "ER": { "name": "Eritrea", "nativeName": "ኤርትራ" },
+    "EE": { "name": "Estonia", "nativeName": "Eesti" },
+    "SZ": { "name": "Eswatini", "nativeName": "eSwatini" },
+    "ET": { "name": "Ethiopia", "nativeName": "ኢትዮጵያ" },
+
+    "FK": { "name": "Falkland Islands (Malvinas)", "nativeName": "Falkland Islands" },
+    "FO": { "name": "Faroe Islands", "nativeName": "Føroyar" },
+    "FJ": { "name": "Fiji", "nativeName": "Fiji" },
+    "FI": { "name": "Finland", "nativeName": "Suomi" },
+    "FR": { "name": "France", "nativeName": "France" },
+    "GF": { "name": "French Guiana", "nativeName": "Guyane" },
+    "PF": { "name": "French Polynesia", "nativeName": "Polynésie française" },
+
+    "GA": { "name": "Gabon", "nativeName": "Gabon" },
+    "GM": { "name": "Gambia", "nativeName": "The Gambia" },
+    "GE": { "name": "Georgia", "nativeName": "საქართველო" },
+    "DE": { "name": "Germany", "nativeName": "Deutschland" },
+    "GH": { "name": "Ghana", "nativeName": "Ghana" },
+    "GI": { "name": "Gibraltar", "nativeName": "Gibraltar" },
+    "GR": { "name": "Greece", "nativeName": "Ελλάδα" },
+    "GL": { "name": "Greenland", "nativeName": "Kalaallit Nunaat" },
+    "GD": { "name": "Grenada", "nativeName": "Grenada" },
+    "GP": { "name": "Guadeloupe", "nativeName": "Guadeloupe" },
+    "GU": { "name": "Guam", "nativeName": "Guam" },
+    "GT": { "name": "Guatemala", "nativeName": "Guatemala" },
+    "GG": { "name": "Guernsey", "nativeName": "Guernsey" },
+    "GN": { "name": "Guinea", "nativeName": "Guinée" },
+    "GW": { "name": "Guinea-Bissau", "nativeName": "Guiné-Bissau" },
+    "GY": { "name": "Guyana", "nativeName": "Guyana" },
+
+    "HT": { "name": "Haiti", "nativeName": "Ayiti" },
+    "VA": { "name": "Vatican City", "nativeName": "Città del Vaticano" },
+    "HN": { "name": "Honduras", "nativeName": "Honduras" },
+    "HK": { "name": "Hong Kong", "nativeName": "香港" },
+    "HU": { "name": "Hungary", "nativeName": "Magyarország" },
+
+    "IS": { "name": "Iceland", "nativeName": "Ísland" },
+    "IN": { "name": "India", "nativeName": "भारत" },
+    "ID": { "name": "Indonesia", "nativeName": "Indonesia" },
+    "IR": { "name": "Iran", "nativeName": "ایران" },
+    "IQ": { "name": "Iraq", "nativeName": "العراق" },
+    "IE": { "name": "Ireland", "nativeName": "Éire" },
+    "IM": { "name": "Isle of Man", "nativeName": "Mann" },
+    "IL": { "name": "Israel", "nativeName": "ישראל" },
+    "IT": { "name": "Italy", "nativeName": "Italia" },
+
+    "JM": { "name": "Jamaica", "nativeName": "Jamaica" },
+    "JP": { "name": "Japan", "nativeName": "日本" },
+    "JE": { "name": "Jersey", "nativeName": "Jersey" },
+    "JO": { "name": "Jordan", "nativeName": "الأردن" },
+
+    "KZ": { "name": "Kazakhstan", "nativeName": "Қазақстан" },
+    "KE": { "name": "Kenya", "nativeName": "Kenya" },
+    "KI": { "name": "Kiribati", "nativeName": "Kiribati" },
+    "KP": { "name": "North Korea", "nativeName": "조선" },
+    "KR": { "name": "South Korea", "nativeName": "한국" },
+    "XK": { "name": "Kosovo", "nativeName": "Косово" },
+    "KW": { "name": "Kuwait", "nativeName": "الكويت" },
+    "KG": { "name": "Kyrgyzstan", "nativeName": "Кыргызстан" },
+    "LA": { "name": "Laos", "nativeName": "ລາວ" },
+    "LV": { "name": "Latvia", "nativeName": "Latvija" },
+    "LB": { "name": "Lebanon", "nativeName": "لبنان" },
+    "LS": { "name": "Lesotho", "nativeName": "Lesotho" },
+    "LR": { "name": "Liberia", "nativeName": "Liberia" },
+    "LY": { "name": "Libya", "nativeName": "ليبيا" },
+    "LI": { "name": "Liechtenstein", "nativeName": "Liechtenstein" },
+    "LT": { "name": "Lithuania", "nativeName": "Lietuva" },
+    "LU": { "name": "Luxembourg", "nativeName": "Lëtzebuerg" },
+
+    "MO": { "name": "Macau", "nativeName": "澳門" },
+    "MG": { "name": "Madagascar", "nativeName": "Madagasikara" },
+    "MW": { "name": "Malawi", "nativeName": "Malawi" },
+    "MY": { "name": "Malaysia", "nativeName": "Malaysia" },
+    "MV": { "name": "Maldives", "nativeName": "ދިވެހި" },
+    "ML": { "name": "Mali", "nativeName": "Mali" },
+    "MT": { "name": "Malta", "nativeName": "Malta" },
+    "MH": { "name": "Marshall Islands", "nativeName": "M̧ajeļ" },
+    "MQ": { "name": "Martinique", "nativeName": "Martinique" },
+    "MR": { "name": "Mauritania", "nativeName": "موريتانيا" },
+    "MU": { "name": "Mauritius", "nativeName": "Moris" },
+    "YT": { "name": "Mayotte", "nativeName": "Mayotte" },
+    "MX": { "name": "Mexico", "nativeName": "México" },
+    "FM": { "name": "Micronesia", "nativeName": "Micronesia" },
+    "MD": { "name": "Moldova", "nativeName": "Moldova" },
+    "MC": { "name": "Monaco", "nativeName": "Monaco" },
+    "MN": { "name": "Mongolia", "nativeName": "Монгол" },
+    "ME": { "name": "Montenegro", "nativeName": "Црна Гора" },
+    "MA": { "name": "Morocco", "nativeName": "المغرب" },
+    "MZ": { "name": "Mozambique", "nativeName": "Moçambique" },
+    "MM": { "name": "Myanmar", "nativeName": "မြန်မာ" },
+
+    "NA": { "name": "Namibia", "nativeName": "Namibia" },
+    "NR": { "name": "Nauru", "nativeName": "Nauru" },
+    "NP": { "name": "Nepal", "nativeName": "नेपाल" },
+    "NL": { "name": "Netherlands", "nativeName": "Nederland" },
+    "NC": { "name": "New Caledonia", "nativeName": "Nouvelle-Calédonie" },
+    "NZ": { "name": "New Zealand", "nativeName": "Aotearoa" },
+    "NI": { "name": "Nicaragua", "nativeName": "Nicaragua" },
+    "NE": { "name": "Niger", "nativeName": "Niger" },
+    "NG": { "name": "Nigeria", "nativeName": "Nigeria" },
+    "MK": { "name": "North Macedonia", "nativeName": "Северна Македонија" },
+    "NO": { "name": "Norway", "nativeName": "Norge" },
+    "OM": { "name": "Oman", "nativeName": "عُمان" },
+
+    "PK": { "name": "Pakistan", "nativeName": "پاکستان" },
+    "PW": { "name": "Palau", "nativeName": "Belau" },
+    "PS": { "name": "Palestine", "nativeName": "فلسطين" },
+    "PA": { "name": "Panama", "nativeName": "Panamá" },
+    "PG": { "name": "Papua New Guinea", "nativeName": "Papua Niugini" },
+    "PY": { "name": "Paraguay", "nativeName": "Paraguay" },
+    "PE": { "name": "Peru", "nativeName": "Perú" },
+    "PH": { "name": "Philippines", "nativeName": "Pilipinas" },
+    "PL": { "name": "Poland", "nativeName": "Polska" },
+    "PT": { "name": "Portugal", "nativeName": "Portugal" },
+    "PR": { "name": "Puerto Rico", "nativeName": "Puerto Rico" },
+    "QA": { "name": "Qatar", "nativeName": "قطر" },
+
+    "RO": { "name": "Romania", "nativeName": "România" },
+    "RU": { "name": "Russia", "nativeName": "Россия" },
+    "RW": { "name": "Rwanda", "nativeName": "Rwanda" },
+
+    "SA": { "name": "Saudi Arabia", "nativeName": "السعودية" },
+    "SN": { "name": "Senegal", "nativeName": "Sénégal" },
+    "RS": { "name": "Serbia", "nativeName": "Србија" },
+    "SC": { "name": "Seychelles", "nativeName": "Sesel" },
+    "SL": { "name": "Sierra Leone", "nativeName": "Sierra Leone" },
+    "SG": { "name": "Singapore", "nativeName": "Singapore" },
+    "SK": { "name": "Slovakia", "nativeName": "Slovensko" },
+    "SI": { "name": "Slovenia", "nativeName": "Slovenija" },
+    "SB": { "name": "Solomon Islands", "nativeName": "Solomon Islands" },
+    "SO": { "name": "Somalia", "nativeName": "Soomaaliya" },
+    "ZA": { "name": "South Africa", "nativeName": "South Africa" },
+    "SS": { "name": "South Sudan", "nativeName": "South Sudan" },
+    "ES": { "name": "Spain", "nativeName": "España" },
+    "LK": { "name": "Sri Lanka", "nativeName": "ශ්‍රී ලංකාව" },
+    "SD": { "name": "Sudan", "nativeName": "السودان" },
+    "SR": { "name": "Suriname", "nativeName": "Suriname" },
+    "SE": { "name": "Sweden", "nativeName": "Sverige" },
+    "CH": { "name": "Switzerland", "nativeName": "Schweiz" },
+    "SY": { "name": "Syria", "nativeName": "سوريا" },
+
+    "TW": { "name": "Taiwan", "nativeName": "臺灣" },
+    "TJ": { "name": "Tajikistan", "nativeName": "Тоҷикистон" },
+    "TZ": { "name": "Tanzania", "nativeName": "Tanzania" },
+    "TH": { "name": "Thailand", "nativeName": "ประเทศไทย" },
+    "TL": { "name": "Timor-Leste", "nativeName": "Timor-Leste" },
+    "TG": { "name": "Togo", "nativeName": "Togo" },
+    "TO": { "name": "Tonga", "nativeName": "Tonga" },
+    "TT": { "name": "Trinidad and Tobago", "nativeName": "Trinidad and Tobago" },
+    "TN": { "name": "Tunisia", "nativeName": "تونس" },
+    "TR": { "name": "Turkey", "nativeName": "Türkiye" },
+    "TM": { "name": "Turkmenistan", "nativeName": "Türkmenistan" },
+    "TV": { "name": "Tuvalu", "nativeName": "Tuvalu" },
+
+    "UG": { "name": "Uganda", "nativeName": "Uganda" },
+    "UA": { "name": "Ukraine", "nativeName": "Україна" },
+    "AE": { "name": "United Arab Emirates", "nativeName": "الإمارات" },
+    "GB": { "name": "United Kingdom", "nativeName": "United Kingdom" },
+    "US": { "name": "United States", "nativeName": "United States" },
+    "UY": { "name": "Uruguay", "nativeName": "Uruguay" },
+    "UZ": { "name": "Uzbekistan", "nativeName": "Oʻzbekiston" },
+
+    "VU": { "name": "Vanuatu", "nativeName": "Vanuatu" },
+    "VE": { "name": "Venezuela", "nativeName": "Venezuela" },
+    "VN": { "name": "Vietnam", "nativeName": "Việt Nam" },
+
+    "YE": { "name": "Yemen", "nativeName": "اليمن" },
+    "ZM": { "name": "Zambia", "nativeName": "Zambia" },
+    "ZW": { "name": "Zimbabwe", "nativeName": "Zimbabwe" }
 }
