@@ -236,5 +236,25 @@
 
     "YE": { "name": "Yemen", "nativeName": "اليمن" },
     "ZM": { "name": "Zambia", "nativeName": "Zambia" },
-    "ZW": { "name": "Zimbabwe", "nativeName": "Zimbabwe" }
+    "ZW": { "name": "Zimbabwe", "nativeName": "Zimbabwe" },
+
+    "BL": { "name": "Saint Barthelemy", "nativeName": "Saint-Barthélemy" },
+    "MF": { "name": "Saint Martin", "nativeName": "Saint-Martin" },
+    "PM": { "name": "Saint Pierre and Miquelon", "nativeName": "Saint-Pierre-et-Miquelon" },
+    "RE": { "name": "Reunion", "nativeName": "La Réunion" },
+    "SJ": { "name": "Svalbard and Jan Mayen", "nativeName": "Svalbard og Jan Mayen" },
+    "SH": { "name": "Saint Helena, Ascension and Tristan Da Cunha", "nativeName": "Saint Helena, Ascension and Tristan da Cunha" },
+    "SM": { "name": "San Marino", "nativeName": "San Marino" },
+    "ST": { "name": "Sao Tome and Principe", "nativeName": "São Tomé e Príncipe" },
+    "SX": { "name": "Sint Maarten", "nativeName": "Sint Maarten" },
+    "TC": { "name": "Turks and Caicos Islands", "nativeName": "Turks and Caicos Islands" },
+    "VG": { "name": "Virgin Islands, British", "nativeName": "British Virgin Islands" },
+    "VI": { "name": "Virgin Islands, U.S.", "nativeName": "U.S. Virgin Islands" },
+    "NF": { "name": "Norfolk Island", "nativeName": "Norfolk Island" },
+    "MP": { "name": "Northern Mariana Islands", "nativeName": "Northern Mariana Islands" },
+    "NU": { "name": "Niue", "nativeName": "Niue" },
+    "TK": { "name": "Tokelau", "nativeName": "Tokelau" },
+    "WF": { "name": "Wallis and Futuna", "nativeName": "Wallis-et-Futuna" },
+    "WS": { "name": "Samoa", "nativeName": "Sāmoa" },
+    "VC": { "name": "Saint Vincent and the Grenadines", "nativeName": "Saint Vincent and the Grenadines" }
 }
