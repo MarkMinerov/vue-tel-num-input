@@ -1,6 +1,6 @@
 {
   "name": "vue-tel-num-input",
-  "version": "0.0.1-beta",
+  "version": "0.0.1",
   "type": "module",
   "author": {
     "name": "Mark Minerov",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkMinerov/vue3-tel-input"
+    "url": "git+https://github.com/MarkMinerov/vue3-tel-input.git"
   },
   "keywords": [
     "vue3",
