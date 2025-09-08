@@ -39,7 +39,7 @@ export interface TelInputModel {
   expanded: boolean;
 }
 
-export type TelInputInitModel = Partial<TelInputModel>;
+export type TelInputInitModel = Readonly<Partial<TelInputModel>>;
 
 type FlagCdnSize =
   | "16x12"

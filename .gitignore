@@ -25,3 +25,4 @@ dist-ssr
 **/stats.html
 stats.html
 .vscode
+**/.vscode

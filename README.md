@@ -55,76 +55,75 @@ const phone = ref("");
 
 ## Props
 
-| Prop                  | Type                                     | Default                | Description                                                 |
-| --------------------- | ---------------------------------------- | ---------------------- | ----------------------------------------------------------- |
-| `size`                | `"sm" \| "md" \| "lg" \| "xl" \| "xxl"`  | `"lg"`                 | Component sizing (affects row/item heights via CSS vars).   |
-| `disableSizing`       | `boolean`                                | `false`                | Turn off built-in sizing classes.                           |
-| `countryCodes`        | `string[]`                               | `[]`                   | Allowlist of ISO2 codes to show.                            |
-| `excludeCountryCodes` | `string[]`                               | `[]`                   | Blocklist of ISO2 codes to hide.                            |
-| `defaultCountryCode`  | `string`                                 | `"US"`                 | Initial country ISO2.                                       |
-| `initialValue`        | `string`                                 | `""`                   | Initial input value.                                        |
-| `international`       | `boolean`                                | `true`                 | Format as international (`+XX`) if true, national if false. |
-| `placeholder`         | `string \| Record<string,string>`        | `"Enter phone number"` | Static placeholder or locale map.                           |
-| `locale`              | `string`                                 | `-`                    | Key to pick from `placeholder` object.                      |
-| `disabled`            | `boolean`                                | `false`                | Disable input.                                              |
-| `flagSource`\*        | `"emoji" \| "sprite" \| "cdn" \| "none"` | `"emoji"`              | Flag rendering strategy (see below).                        |
-| `displayName`         | `"english" \| "native"`                  | `"english"`            | Country name to display.                                    |
-| `itemHeight`          | `number`                                 | by `size`              | Row height override (px).                                   |
-| `autoDetectCountry`   | `boolean`                                | `false`                | Detect user country on mount (best effort).                 |
-| `input`               | `object`                                 | see below              | Input behavior flags.                                       |
-| `search`              | `object`                                 | see below              | Search box behavior flags.                                  |
-| `prefix`              | `object`                                 | see below              | Country button visibility toggles.                          |
-| `list`                | `object`                                 | see below              | Dropdown behavior/visibility.                               |
-
-**Nested option defaults**
-
-```ts
-input: {
-  clearOnCountrySelect: true,
-  focusAfterCountrySelect: true,
-  formatterEnabled: true,
-  maxLength: undefined,     // optional cap
-}
-
-search: {
-  hidden: false,
-  placeholder: undefined,   // string | Record<string,string>
-  locale: undefined,        // pick key from placeholder map
-  clearOnSelect: true,
-  autoFocus: true,
-}
-
-prefix: {
-  hidden: false,
-  hideCode: false,
-  hideFlag: false,
-  hideChevron: false,
-  hideCountryName: false,
-}
-
-list: {
-  hidden: false,
-  hideCode: false,
-  hideFlag: false,
-  hideCountryName: false,
-  returnToSelected: true,
-  itemsPerView: 5,
-}
-```
+| Prop                            | Type                                    | Default                | Description                                                    |
+| ------------------------------- | --------------------------------------- | ---------------------- | -------------------------------------------------------------- |
+| `size`                          | `"sm" \| "md" \| "lg" \| "xl" \| "xxl"` | `"lg"`                 | Component sizing (affects row/item heights via CSS variables). |
+| `disableSizing`                 | `boolean`                               | `false`                | Turn off built-in sizing classes.                              |
+| `countryCodes`                  | `string[]`                              | `[]`                   | Allowlist of ISO2 codes to show.                               |
+| `excludeCountryCodes`           | `string[]`                              | `[]`                   | Blocklist of ISO2 codes to hide.                               |
+| `defaultCountryCode`            | `string`                                | `"US"`                 | Initial country ISO2.                                          |
+| `initialValue`                  | `string`                                | `""`                   | Initial input value.                                           |
+| `international`                 | `boolean`                               | `true`                 | Format as international (`+XX`) if true, national if false.    |
+| `placeholder`                   | `string \| Record<string,string>`       | `"Enter phone number"` | Static placeholder or locale map.                              |
+| `locale`                        | `string`                                | `-`                    | Key to pick from `placeholder` object.                         |
+| `disabled`                      | `boolean`                               | `false`                | Disable input.                                                 |
+| `flagSource`                    | `"emoji" \| "sprite" \| "cdn"           | `"emoji"`              | Strategy for flag rendering (emoji, sprite, CDN).              |
+| `displayName`                   | `"english" \| "native"`                 | `"english"`            | Country name to display.                                       |
+| `itemHeight`                    | `number`                                | size-based             | Row height override in px.                                     |
+| `autoDetectCountry`             | `boolean`                               | `false`                | Detect user country on mount (best effort).                    |
+| **Input options**               |                                         |                        |                                                                |
+| `input.clearOnCountrySelect`    | `boolean`                               | `true`                 | Clear input when selecting a new country.                      |
+| `input.focusAfterCountrySelect` | `boolean`                               | `true`                 | Autofocus input after selecting a new country.                 |
+| `input.formatterEnabled`        | `boolean`                               | `true`                 | Enable libphonenumber formatting while typing.                 |
+| `input.lockCountryCode`         | `boolean`                               | `false`                | Prevent user from removing/editing the country code.           |
+| `input.maxLength`               | `number \| undefined`                   | `undefined`            | Optional character cap for input.                              |
+| **Search options**              |                                         |                        |                                                                |
+| `search.hidden`                 | `boolean`                               | `false`                | Hide search bar in dropdown.                                   |
+| `search.placeholder`            | `string \| Record<string,string>`       | `undefined`            | Placeholder text or localized map.                             |
+| `search.locale`                 | `string`                                | `undefined`            | Key to pick from `search.placeholder` map.                     |
+| `search.clearOnSelect`          | `boolean`                               | `true`                 | Clear search query after selecting a country.                  |
+| `search.autoFocus`              | `boolean`                               | `true`                 | Autofocus the search input when dropdown opens.                |
+| **Prefix options**              |                                         |                        |                                                                |
+| `prefix.hidden`                 | `boolean`                               | `false`                | Hide prefix button entirely.                                   |
+| `prefix.hideCode`               | `boolean`                               | `false`                | Hide dialing code in prefix.                                   |
+| `prefix.hideFlag`               | `boolean`                               | `false`                | Hide flag in prefix.                                           |
+| `prefix.hideChevron`            | `boolean`                               | `false`                | Hide dropdown chevron.                                         |
+| `prefix.hideCountryName`        | `boolean`                               | `false`                | Hide country name in prefix.                                   |
+| **List options**                |                                         |                        |                                                                |
+| `list.hidden`                   | `boolean`                               | `false`                | Hide country list (disables dropdown).                         |
+| `list.hideCode`                 | `boolean`                               | `false`                | Hide dialing codes inside the list.                            |
+| `list.hideFlag`                 | `boolean`                               | `false`                | Hide flags inside the list.                                    |
+| `list.hideCountryName`          | `boolean`                               | `false`                | Hide country names inside the list.                            |
+| `list.returnToSelected`         | `boolean`                               | `true`                 | Scroll back to selected country when reopening dropdown.       |
+| `list.itemsPerView`             | `number`                                | `5`                    | Max visible items in dropdown before scrolling.                |
 
 > _Flag strategy notes_
 >
 > - `emoji`: lightweight, zero-network, varies by OS font rendering.
 > - `sprite`: best for consistent visuals offline; bundle your sprite.
 > - `cdn`: smallest package size; requires network & CORS-safe CDN.
-> - `none`: bring your own via slots.
 
 ## v-model
 
-The component supports `v-model`:
+The component uses v-model to expose the current state of the input.
+Unlike many inputs that bind to a simple string, this component returns a full TelInputModel object:
 
-- `v-model="string"` → binds the **raw input value** (`model.value` internally).
-- You can also listen to updates and maintain your own composite model via events.
+```ts
+type TelInputModel = {
+  iso: string; // Selected country ISO2 (e.g. "US")
+  name: string; // Country name (localized)
+  code: string; // Country calling code (e.g. "+1")
+  value: string; // Raw phone number string (user input)
+  search: string; // Current search query in dropdown
+  expanded: boolean; // Whether the country list is open
+};
+```
+
+Important
+
+- The model is **readonly from the outside**: you should not manually assign values into it.
+- Always initialize your ref with an empty object `({})` — the component will populate and update it.
+- Use it for **reading only**, all changes come from user interaction inside the component.
 
 ## Events
 
@@ -216,9 +215,9 @@ const detectCountry = async () => {
 </template>
 ```
 
-## Examples
+## 🫡 Examples
 
-### Control visible countries
+#### Control visible countries
 
 ```vue
 <VueTelNumInput
@@ -227,13 +226,13 @@ const detectCountry = async () => {
 />
 ```
 
-### Use native names and CDN flags
+#### Use native names and CDN flags
 
 ```vue
 <VueTelNumInput v-model="phone" display-name="native" :flag-source="'cdn'" />
 ```
 
-### Custom button (slots)
+#### Custom button (slots)
 
 ```vue
 <VueTelNumInput v-model="phone">
@@ -248,7 +247,7 @@ const detectCountry = async () => {
 </VueTelNumInput>
 ```
 
-### Localized placeholder
+#### Localized placeholder
 
 ```vue
 <VueTelNumInput
@@ -258,7 +257,7 @@ const detectCountry = async () => {
 />
 ```
 
-### Input masking via libphonenumber-js
+#### Input masking via libphonenumber-js
 
 ```ts
 // prop input.formatterEnabled=true enables AsYouType internally
@@ -266,7 +265,7 @@ const detectCountry = async () => {
 
 OR bring your own mask by replacing the `input` slot and binding back to `v-model`.
 
-## Types
+## 💀 Types
 
 The library exports useful types:
 
@@ -290,7 +289,7 @@ type TelInputModel = {
 
 > If you’re building wrappers, re-export these types from your package so users don’t need to reach inside your internals.
 
-## CSS Variables
+## ✨ CSS Variables
 
 | Var                                    | Default                   | Notes                                                 |
 | -------------------------------------- | ------------------------- | ----------------------------------------------------- |
@@ -334,75 +333,58 @@ type TelInputModel = {
 
 You can also disable built-in sizing with `disableSizing` and style from scratch.
 
-## Roadmap
+## 🛣️ Roadmap
 
 - Dropdown with complete slot coverage ✅
 - Multiple flag strategies ✅
 - Global vs national formatting toggle ✅
 - Search UX polish (clear icon, keyboard nav) ⏳
 - Fully documented events & accessibility pass ⏳
+- Tests 🤯
 
-Contributions welcome—see below.
+Contributions welcome — see below 🙏.
 
-## Accessibility
+## 🧶 Accessibility
 
 - Keyboard navigation in dropdown (planned)
 - ARIA attributes on toggle and list (planned)
 - Focus management on open/close (partial; improvements planned)
 
-> If accessibility is critical in your project, review current behavior and consider contributing improvements—happy to collaborate.
+> If accessibility is critical in your project, review current behavior and consider contributing improvements — happy to collaborate.
 
-## Contributing
+## 🤝 Contributing
 
-1. Fork & branch
-2. `npm i`
-3. `pnpm dev` to run playground
-4. Add tests/docs where relevant
-5. Open a PR with a clear description + screenshots/gifs for UI changes
+Contributions are very welcome! You can help by fixing bugs, improving docs, or adding features.
 
-Bug reports and feature requests → GitHub Issues.
+1. Fork the repo and create a new branch
+2. `npm i` to install dependencies
+3. `npm watch:build` to build the project JIT
+4. `npm link` in directory folder
+5. `npm link vue-tel-num-input` in your project directory
+6. Commit your changes and push your branch 😍
+7. Create Pull-Request
+8. Thank you
 
-## License
+For UI changes please include screenshots or gifs so it’s easy to review 🥹
 
-MIT © 2025 Mark Minerov
+👉 Bug reports and feature requests should be submitted as GitHub Issues.
 
-## Appendix: Advanced Usage
+## 🚧 Project Status
 
-### Full control over list items
+This component is currently in beta.
+The API and behavior may still change before a stable release.
 
-```vue
-<VueTelNumInput v-model="phone">
-  <template #item:countryName="{ data }">
-    <div class="item-name">
-      {{ data.nativeName }} <small>({{ data.name }})</small>
-    </div>
-  </template>
-  <template #item:code="{ data }">
-    <span class="item-code">+{{ data.callingCode }}</span>
-  </template>
-</VueTelNumInput>
-```
+If you encounter any bugs, unexpected behavior, or have feature requests:
+👉 please open an issue on [GitHub](https://github.com/MarkMinerov/vue3-tel-input/issues)
 
-### National vs international
+Your feedback will help improve and stabilize the component for production use.
 
-```vue
-<!-- international (E.164-like) -->
-<VueTelNumInput v-model="phone" :international="true" />
-
-<!-- national -->
-<VueTelNumInput v-model="phone" :international="false" />
-```
-
-### Programmatic dropdown control
-
-Listen to `toggle` and maintain your own UI state if needed.
-
-```vue
-<VueTelNumInput v-model="phone" @toggle="(open) => (isOpen = open)" />
-```
-
-### Notes & Caveats
+## Notes & Caveats
 
 - CDN flags require a CORS-safe provider; otherwise use `emoji` or `sprite`.
 - `autoDetectCountry` is best-effort; always set `defaultCountryCode` as fallback.
 - When `formatterEnabled` is `true`, manual cursor jumps can occur with some masks—test your locales and adjust strategy if needed.
+
+## License
+
+MIT © 2025 Mark Minerov
