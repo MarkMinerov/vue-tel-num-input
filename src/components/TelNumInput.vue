@@ -73,7 +73,7 @@
       </slot>
     </div>
 
-    <Transition name="fade">
+    <Transition :name="animationName">
       <div v-if="model.expanded && !list.hidden" class="tel-num-input__body">
         <slot name="body:search">
           <div
@@ -196,10 +196,11 @@ const props = withDefaults(
       defaultCountryCode: string;
       placeholder: Record<string, string> | string;
       locale: string;
+      itemHeight: number;
       disabled: boolean;
       silent: boolean;
       flag: FlagConfig;
-      itemHeight: number;
+      animationName: string; // TODO: new
       initialValue: string;
       international: boolean;
       displayName: "native" | "english";
@@ -246,6 +247,7 @@ const props = withDefaults(
     defaultCountryCode: "US",
     disabled: false,
     silent: false,
+    animationName: "fade",
     initialValue: "",
     international: true,
     input: () => ({
@@ -301,6 +303,7 @@ const {
   list,
   prefix,
   itemHeight,
+  animationName,
   autoDetectCountry,
 } = toRefs(props);
 const searchLocale = toRef(() => props.search.locale);
