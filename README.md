@@ -1,4 +1,4 @@
-# Vue Tel Num Input
+# 📞 Vue Tel Num Input
 
 A fully customizable **phone number input** for Vue 3 with country selection, flags, masking, and localization. Built for flexibility and great DX.
 
