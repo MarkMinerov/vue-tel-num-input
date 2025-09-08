@@ -1,6 +1,6 @@
 import { Ref, computed, watch } from "vue";
 import configJson from "~/assets/configs/iso.json";
-import type { ConfigType } from "~/types";
+import type { ConfigType, Country } from "~/types";
 
 import { useWarn } from "./useWarn";
 
@@ -49,7 +49,7 @@ export const useValidCountries = (
     return countryCodes;
   });
 
-  const validCountries = computed(() =>
+  const validCountries = computed<Country[]>(() =>
     validCountryCodes.value.map((code: string) => ({
       ...config[code],
       iso: code,

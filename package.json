@@ -8,6 +8,11 @@
     "url": "https://github.com/MarkMinerov"
   },
   "description": "A flexible and fully customizable Vue 3 component for phone number input with country code selection, flags, masking, and localization.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkMinerov/vue3-tel-input"
+  },
   "keywords": [
     "vue3",
     "vue",

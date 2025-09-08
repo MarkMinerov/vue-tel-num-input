@@ -1,6 +1,6 @@
 import { ref, watch, nextTick, type Ref } from "vue";
 import { AsYouType, getCountryCallingCode } from "libphonenumber-js/core";
-import metadata from "libphonenumber-js/metadata.full.json";
+import metadata from "libphonenumber-js/metadata.min.json";
 import type { CountryCode } from "libphonenumber-js/core";
 
 import CC_PRIORITY from "~/assets/configs/priority.json";

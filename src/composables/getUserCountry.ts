@@ -1,15 +1,34 @@
-import { watch, Ref, ref } from "vue";
+import { watch, Ref, ref, ComputedRef } from "vue";
+import { useWarn } from "./useWarn";
+import { Country } from "~/types";
 
-export const getUserCountry = async (enabled: Ref<boolean>) => {
+export const getUserCountry = ({
+  enabled,
+  validCountries,
+  isoRef,
+  silent,
+}: {
+  enabled: Ref<boolean>;
+  validCountries: ComputedRef<Country[]>;
+  isoRef?: Ref<string>;
+  silent: Ref<boolean>;
+}) => {
+  let warn = useWarn(silent.value);
+  watch(silent, (newVal) => (warn = useWarn(newVal)));
+
   const API_URL = "https://ipapi.co/country/";
   const country = ref<string | null>(null);
 
-  const getUserCountry = async () => {
+  const requestUserCountry = async () => {
     try {
       const response = await fetch(API_URL);
-      country.value = await response.text();
+      const value = await response.text();
+      if (validCountries.value.find((c) => c.iso === value)) {
+        country.value = value;
+        if (isoRef) isoRef.value = value;
+      }
     } catch (error) {
-      console.error("Error fetching user country:", error);
+      warn("Error fetching user country:", error);
       return null;
     }
 
@@ -17,10 +36,10 @@ export const getUserCountry = async (enabled: Ref<boolean>) => {
   };
 
   watch(enabled, (newVal) => {
-    if (newVal) getUserCountry();
+    if (newVal) requestUserCountry();
   });
 
-  if (enabled.value) await getUserCountry();
+  if (enabled.value) requestUserCountry();
 
-  return { country, getUserCountry };
+  return { country, requestUserCountry };
 };

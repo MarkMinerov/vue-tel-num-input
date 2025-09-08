@@ -24,6 +24,12 @@ export interface FlagApiExt {
   style?: "shiny" | "flat";
 }
 
+export interface Country {
+  iso: string;
+  name: string;
+  nativeName: string;
+}
+
 export interface TelInputModel {
   iso: string;
   name: string;

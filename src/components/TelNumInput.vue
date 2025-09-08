@@ -165,13 +165,15 @@ import {
   watch,
 } from "vue";
 import type { CountryConfig, FlagConfig, TelInputModel } from "~/types";
+import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
+
 import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
 import { usePhoneFormat } from "~/composables/usePhoneFormat";
 import { useCountrySearch } from "~/composables/useCountrySearch";
 import { onClickOutside } from "~/composables/onClickOutside";
+import { getUserCountry } from "~/composables/getUserCountry";
 import { useInit } from "~/composables/useInit";
-import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 
 import FlagIcon from "./FlagIcon.vue";
 
@@ -299,6 +301,7 @@ const {
   list,
   prefix,
   itemHeight,
+  autoDetectCountry,
 } = toRefs(props);
 const searchLocale = toRef(() => props.search.locale);
 const searchPlaceholder = toRef(() => props.search.placeholder);
@@ -442,6 +445,13 @@ const { setComposing, formatNow } = usePhoneFormat({
   },
 });
 
+const { country, requestUserCountry } = getUserCountry({
+  enabled: autoDetectCountry,
+  validCountries,
+  isoRef,
+  silent,
+});
+
 watch(
   () => model.value.search,
   () => scrollListEl.value?.scrollTo({ top: 0 })
@@ -468,37 +478,16 @@ watch(searchEl, () => {
   if (search.value.autoFocus && searchEl.value) searchEl.value.focus();
 });
 
-// Development flow:
-// 1. Basic structure: button with code + flag, input for phone number
-// 2. Dropdown for country codes, user can choose country code + choose only which country codes to show
-
-// Features:
-
-// TODO: Dropdown for country codes
-// user can pass slot DONE
-// user can pass list of country codes DONE
-// user can choose from where to load country flag icon: API, local assets, emojis DONE
-
-// TODO: Button with chevron, country code, flag DONE
-// user can pass slot for button DONE
-// user can pass his own text for code DONE
-// user can pass his own flag icon DONE
-// user can pass his prefix and suffix slot DONE
-// add search (user can pass anything to replace the search with)
-// return to last selected country code in list
-// clear search with cross icon
-
-// TODO: Input for phone number
-// user can pass slot for input
-// user can pass his own placeholder + translates + locale
-// user can pass mask for input
-// user can decide he wants to use mask for input or not
-// is global code or local code TODO
-// select code as user type (block dropdown) TODO
-// international format or local format TODO
-
-// props and methods:
-// https://iamstevendao.github.io/vue-tel-input/usage/props.html
+defineExpose({
+  switchDropdown,
+  selectItem,
+  formatNow,
+  inputEl,
+  searchEl,
+  telNumInputEl,
+  country,
+  requestUserCountry,
+});
 </script>
 
 <style lang="scss" scoped>
@@ -615,7 +604,7 @@ watch(searchEl, () => {
       svg {
         width: var(--tel-input-icon-size, 16px);
         height: var(--tel-input-icon-size, 16px);
-        margin-left: var(--tel-input--search-icon-margin-x, 12px);
+        margin-left: var(--tel-input-search-icon-margin-x, 12px);
         fill: var(--tel-input-search-icon-color, #333);
       }
 
