@@ -105,8 +105,23 @@ const phone = ref("");
 
 ## v-model
 
-The component uses v-model to expose the current state of the input.
-Unlike many inputs that bind to a simple string, this component returns a full TelInputModel object:
+This component uses typed object binding.
+`v-model` works with a `TelInputInitModel`, giving you both the phone number and related country metadata.
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import type { TelInputInitModel } from "vue-tel-num-input/types";
+
+const model = ref<TelInputInitModel>({});
+</script>
+
+<template>
+  <VueTelNumInput v-model="model" default-country-code="US" />
+</template>
+```
+
+### TelInputInitModel shape
 
 ```ts
 type TelInputModel = {
@@ -119,7 +134,9 @@ type TelInputModel = {
 };
 ```
 
-Important
+This gives you full control over both **value** and **UI state** (selected country, search query, expanded state).
+
+#### Important
 
 - The model is **readonly from the outside**: you should not manually assign values into it.
 - Always initialize your ref with an empty object `({})` — the component will populate and update it.
