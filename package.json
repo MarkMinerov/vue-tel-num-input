@@ -45,6 +45,7 @@
     },
     "dependencies": {
         "@vueuse/core": "^13.9.0",
+        "country-flag-emoji-polyfill": "^0.1.8",
         "libphonenumber-js": "^1.12.15"
     }
 }

@@ -332,6 +332,7 @@ const { validCountries, defaultIso, config } = useValidCountries(
   defaultCountryCode,
   silent
 );
+
 const { initialData } = useInit(
   defaultIso,
   props.initialValue,
@@ -345,6 +346,7 @@ const { placVal } = usePlaceholder(
   silent,
   "Enter phone number"
 );
+
 const { placVal: searchPlacVal } = usePlaceholder(
   searchLocale,
   searchPlaceholder,
@@ -358,12 +360,12 @@ const dispNameKey = computed<keyof CountryConfig>(() =>
 
 const model = ref({
   iso: initialData?.country!.toString() || defaultIso.value,
-  name:
-    config[initialData?.country!][dispNameKey.value] ||
-    config[defaultIso.value][dispNameKey.value],
-  code:
-    `+${initialData?.countryCallingCode}` ||
-    getCountryCodeByIso(defaultIso.value),
+  name: config[initialData?.country!]
+    ? config[initialData?.country!][dispNameKey.value]
+    : config[defaultIso.value][dispNameKey.value],
+  code: initialData?.countryCallingCode
+    ? `+${initialData?.countryCallingCode}`
+    : getCountryCodeByIso(defaultIso.value),
   value: initialData ? props.initialValue : "",
   search: "",
   expanded: false,

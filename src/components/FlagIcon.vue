@@ -21,6 +21,9 @@
 
 <script setup lang="ts">
 import { toRefs, computed } from "vue";
+import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
+polyfillCountryFlagEmojis();
+
 import type {
   FlagConfig,
   SpriteConfig,
@@ -105,4 +108,9 @@ const apiUrl = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.emoji {
+  font-family: "Twemoji Country Flags", "Helvetica", "Comic Sans", serif;
+  line-height: 0%;
+}
+</style>

@@ -38,11 +38,13 @@ export function usePhoneFormat(params: {
   const getISO = () =>
     (params.iso.value || "").toUpperCase() as CountryCode | undefined;
 
+  const cutAnyPlusPrefixRe = /^\+\d{1,3}[\s\u00A0\u202F\-\)]*/;
+
   const getPrefixParts = (iso?: CountryCode) => {
     if (!iso) return { cc: "", prefix: "", formattedPrefix: "" };
     const cc = getCountryCallingCode(iso, metadata as any);
     const prefix = `+${cc}`;
-    const formattedPrefix = fmtIntl(prefix); // учтёт пробел после кода там, где это нужно
+    const formattedPrefix = fmtIntl(prefix);
     return { cc, prefix, formattedPrefix };
   };
 
@@ -51,78 +53,96 @@ export function usePhoneFormat(params: {
     const m = input.match(/^\+(\d{1,3})/);
     if (!m) return;
     const digits = m[1];
-
     for (const len of [3, 2, 1]) {
       const cc = digits.slice(0, len);
       if (!cc) continue;
       const list = ccToIso.get(cc);
-
-      if (!list || list.length !== 1) continue;
-      const iso = list[0];
-      if (iso && iso !== (params.iso.value || "").toUpperCase())
-        params.iso.value = iso as any;
-      break;
+      if (!list) continue;
+      if (list.length === 1) {
+        const iso = list[0];
+        if (iso && iso !== (params.iso.value || "").toUpperCase()) {
+          params.iso.value = iso as any;
+        }
+        return;
+      }
+      return;
     }
   };
 
-  const mapAndFormat = (raw: string, caretStart: number, caretEnd: number) => {
+  const ensurePrefixPresent = (): boolean => {
+    if (!params.international.value) return false;
     const ISO = getISO();
+    if (!ISO) return false;
+    const v = params.value.value || "";
+    if (v.startsWith("+")) return false;
 
+    const { formattedPrefix } = getPrefixParts(ISO);
+    if (v === "" || !v.startsWith(formattedPrefix)) {
+      isFormatting.value = true;
+      params.value.value = formattedPrefix;
+      nextTick(() => {
+        const e = params.inputEl.value as HTMLInputElement | null;
+        if (e) {
+          const p = e.value.length;
+          try {
+            e.setSelectionRange(p, p);
+          } catch {}
+        }
+        params.onAfterFormat?.(params.value.value);
+      });
+      return true;
+    }
+    return false;
+  };
+
+  const mapAndFormat = (raw: string, caretStart: number, caretEnd: number) => {
     if (params.international.value) {
-      // ————— International: фиксируем префикс выбранной страны и не даём его стирать
+      if (raw.startsWith("+")) {
+        const formattedAll = fmtIntl(raw);
+        const toStartLen = fmtIntl(raw.slice(0, caretStart)).length;
+        let newStart = toStartLen;
+        let newEnd = newStart;
+        if (caretEnd !== caretStart) {
+          const toEndLen = fmtIntl(raw.slice(0, caretEnd)).length;
+          newEnd = Math.max(toEndLen, newStart);
+        }
+        return { formattedAll, newStart, newEnd };
+      }
+
+      const ISO = getISO();
       if (!ISO)
         return { formattedAll: raw, newStart: caretStart, newEnd: caretEnd };
 
-      const { cc, prefix, formattedPrefix } = getPrefixParts(ISO);
+      const { prefix, formattedPrefix } = getPrefixParts(ISO);
+      const base = raw.replace(cutAnyPlusPrefixRe, "");
+      const removed = raw.length - base.length;
 
-      // Срезаем любой введённый префикс (любой +<digits>...) и оставляем «базу»
-      const cutAnyPrefix = /^\+\d{1,3}[\s\-\)]*/;
-      const hadPrefixAnyLen = cutAnyPrefix.exec(raw)?.[0]?.length ?? 0;
-      const base = raw.replace(cutAnyPrefix, "");
+      const adjStart = Math.max(0, caretStart - Math.min(removed, caretStart));
+      const adjEnd = Math.max(0, caretEnd - Math.min(removed, caretEnd));
 
-      // Привязываем каретку к базе (не даём уйти в префикс)
-      const adjStart = Math.max(
-        0,
-        caretStart - Math.min(hadPrefixAnyLen, caretStart)
-      );
-      const adjEnd = Math.max(
-        0,
-        caretEnd - Math.min(hadPrefixAnyLen, caretEnd)
-      );
-
-      // Пересобираем «международное» сырьё и форматируем целиком
       const intlRaw = prefix + base;
-      const formattedAllIntl = fmtIntl(intlRaw);
+      const formattedAllIntl = base ? fmtIntl(intlRaw) : formattedPrefix;
 
-      // Длина форматированного префикса — минимум позиции каретки
       const toStartIntlLen = fmtIntl(
         intlRaw.slice(0, prefix.length + adjStart)
       ).length;
-      let newStart = Math.max(fmtIntl(prefix).length, toStartIntlLen);
-      let newEnd = newStart;
+      const toEndIntlLen = fmtIntl(
+        intlRaw.slice(0, prefix.length + adjEnd)
+      ).length;
 
-      if (adjEnd !== adjStart) {
-        const toEndIntlLen = fmtIntl(
-          intlRaw.slice(0, prefix.length + adjEnd)
-        ).length;
-        newEnd = Math.max(newStart, toEndIntlLen);
-      }
-
-      // Защита: каретка не левее форматированного префикса
       const minPos = formattedPrefix.length;
-      newStart = Math.max(newStart, minPos);
-      newEnd = Math.max(newEnd, minPos);
+      let newStart = Math.max(minPos, toStartIntlLen);
+      let newEnd = Math.max(newStart, toEndIntlLen);
 
       return { formattedAll: formattedAllIntl, newStart, newEnd };
     } else {
-      // ————— National: как у тебя было — без префикса, но на основе ISO
       const ISO = getISO();
       if (!ISO)
         return { formattedAll: raw, newStart: caretStart, newEnd: caretEnd };
 
       const cc = getCountryCallingCode(ISO, metadata as any);
       const prefix = `+${cc}`;
-      const cutRe = new RegExp(`^\\+?${cc}[\\s\\-\\)]*`);
+      const cutRe = new RegExp(`^\\+?${cc}[\\s\\u00A0\\u202F\\-\\)]*`);
       const hadPrefixLen = cutRe.exec(raw)?.[0]?.length ?? 0;
       const base = raw.replace(cutRe, "");
       const adjStart = Math.max(
@@ -132,7 +152,6 @@ export function usePhoneFormat(params: {
       const adjEnd = Math.max(0, caretEnd - Math.min(hadPrefixLen, caretEnd));
 
       const intlRaw = prefix + base;
-
       const formattedAllIntl = fmtIntl(intlRaw);
       const formattedPrefix = fmtIntl(prefix);
       const formattedNational = formattedAllIntl
@@ -158,36 +177,43 @@ export function usePhoneFormat(params: {
   const applyFormattingWithCaret = (raw?: string) => {
     const el = params.inputEl.value as HTMLInputElement | null;
     const curr = raw ?? params.value.value;
-    const ISO = getISO();
 
     if (!el) {
-      // Без поля ввода — просто форсируем текст
       if (params.international.value) {
-        if (!ISO) return;
-        const { cc, prefix } = getPrefixParts(ISO);
-        const base = curr.replace(/^\+\d{1,3}[\s\-\)]*/, "");
-        const intlRaw = prefix + base;
-
-        const formattedAllIntl = fmtIntl(intlRaw);
-        if (formattedAllIntl !== curr) params.value.value = formattedAllIntl;
-
-        // (Опционально) авто-ISO по вставленному номеру — если ISO не задан
-        // но у нас ISO есть — поэтому не меняем ISO здесь
-
-        params.onAfterFormat?.(params.value.value);
-        return;
+        if (curr.startsWith("+")) {
+          const formatted = fmtIntl(curr);
+          if (formatted !== curr) params.value.value = formatted;
+          tryAutoSelectIsoByPlus(params.value.value);
+          params.onAfterFormat?.(params.value.value);
+          return;
+        } else {
+          const ISO = getISO();
+          if (!ISO) return;
+          const { prefix, formattedPrefix } = getPrefixParts(ISO);
+          const base = curr.replace(cutAnyPlusPrefixRe, "");
+          const intlRaw = prefix + base;
+          const formattedAllIntl = base ? fmtIntl(intlRaw) : formattedPrefix;
+          if (formattedAllIntl !== curr) params.value.value = formattedAllIntl;
+          params.onAfterFormat?.(params.value.value);
+          return;
+        }
       } else {
+        const ISO = getISO();
         if (!ISO) return;
-        const { cc, prefix } = getPrefixParts(ISO);
-        const base = curr.replace(new RegExp(`^\\+?${cc}[\\s\\-\\)]*`), "");
+        const { prefix } = getPrefixParts(ISO);
+        const cutRe = new RegExp(
+          `^\\+?${getCountryCallingCode(
+            ISO,
+            metadata as any
+          )}[\\s\\u00A0\\u202F\\-\\)]*`
+        );
+        const base = curr.replace(cutRe, "");
         const intlRaw = prefix + base;
-
         const formattedAllIntl = fmtIntl(intlRaw);
         const formattedPrefix = fmtIntl(prefix);
         const formattedNational = formattedAllIntl
           .slice(formattedPrefix.length)
           .trimStart();
-
         if (formattedNational !== curr) params.value.value = formattedNational;
         params.onAfterFormat?.(params.value.value);
         return;
@@ -210,27 +236,23 @@ export function usePhoneFormat(params: {
       let s = Math.min(newStart, max);
       let f = Math.min(newEnd, max);
 
-      // В international — не позволяем каретке заходить в префикс
       if (params.international.value) {
-        const ISO = getISO();
-        if (ISO) {
-          const { formattedPrefix } = getPrefixParts(ISO);
-          const minPos = formattedPrefix.length;
-          s = Math.max(s, minPos);
-          f = Math.max(f, minPos);
+        if (e.value.startsWith("+")) {
+          tryAutoSelectIsoByPlus(e.value);
+        } else {
+          const ISO = getISO();
+          if (ISO) {
+            const { formattedPrefix } = getPrefixParts(ISO);
+            const minPos = formattedPrefix.length;
+            s = Math.max(s, minPos);
+            f = Math.max(f, minPos);
+          }
         }
       }
 
       try {
         e.setSelectionRange(s, f);
       } catch {}
-
-      if (params.international.value) {
-        // В принудительном режиме префикс фиксируем — авто-определение ISO по + не выполняем,
-        // чтобы не «перепрыгивать» страну случайно. Если хочешь — можно вернуть tryAutoSelectIsoByPlus(e.value)
-        // но это будет менять ISO при вставке другого кода.
-      }
-
       params.onAfterFormat?.(e.value);
     });
   };
@@ -245,6 +267,10 @@ export function usePhoneFormat(params: {
         return;
       }
       if (nv == null || nv === ov) return;
+
+      if (params.international.value && !String(nv).startsWith("+")) {
+        if (ensurePrefixPresent()) return;
+      }
       applyFormattingWithCaret(nv);
     }
   );
@@ -253,25 +279,35 @@ export function usePhoneFormat(params: {
     () => params.needFormat.value,
     (on) => {
       if (!on) return;
+      if (params.international.value) ensurePrefixPresent();
       applyFormattingWithCaret();
-    }
+    },
+    { immediate: true }
   );
 
   watch(
     () => params.international.value,
-    () => {
+    (intl) => {
       if (!params.needFormat.value) return;
+      if (intl) ensurePrefixPresent();
       applyFormattingWithCaret();
-    }
+    },
+    { immediate: true }
   );
 
   watch(
     () => params.iso.value,
     () => {
       if (!params.needFormat.value) return;
+      if (params.international.value) ensurePrefixPresent();
       applyFormattingWithCaret();
-    }
+    },
+    { immediate: true }
   );
+
+  if (params.needFormat.value && params.international.value) {
+    ensurePrefixPresent();
+  }
 
   return { isComposing, setComposing, formatNow: applyFormattingWithCaret };
 }

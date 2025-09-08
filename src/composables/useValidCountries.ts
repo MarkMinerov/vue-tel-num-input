@@ -58,9 +58,12 @@ export const useValidCountries = (
 
   const defaultIso = computed(() => {
     const defCode = defCountryCode.value?.toUpperCase();
+
     if (!defCode || !isoCodes.includes(defCode)) return "US";
     return defCode;
   });
+
+  console.log(defaultIso.value);
 
   return { isoCodes, validCountries, defaultIso, config };
 };
