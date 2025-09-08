@@ -63,7 +63,5 @@ export const useValidCountries = (
     return defCode;
   });
 
-  console.log(defaultIso.value);
-
   return { isoCodes, validCountries, defaultIso, config };
 };

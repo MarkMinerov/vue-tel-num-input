@@ -164,11 +164,12 @@ import {
   nextTick,
   watch,
 } from "vue";
-import { onClickOutside } from "@vueuse/core";
-import type { CountryConfig, FlagConfig } from "~/types";
+import type { CountryConfig, FlagConfig, TelInputModel } from "~/types";
 import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
 import { usePhoneFormat } from "~/composables/usePhoneFormat";
+import { useCountrySearch } from "~/composables/useCountrySearch";
+import { onClickOutside } from "~/composables/onClickOutside";
 import { useInit } from "~/composables/useInit";
 import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
 
@@ -200,14 +201,12 @@ const props = withDefaults(
       initialValue: string;
       international: boolean;
       displayName: "native" | "english";
+      autoDetectCountry: boolean;
       input: Partial<{
         clearOnCountrySelect: boolean;
         focusAfterCountrySelect: boolean;
         lockCountryCode: boolean;
-        formatter: Partial<{
-          enabled: boolean;
-          formatOnInit: boolean;
-        }>;
+        formatterEnabled: boolean;
         maxLength: number;
       }>;
       search: Partial<{
@@ -241,6 +240,7 @@ const props = withDefaults(
     displayName: "english",
     countryCodes: () => [],
     excludeCountryCodes: () => [],
+    autoDetectCountry: false,
     defaultCountryCode: "US",
     disabled: false,
     silent: false,
@@ -249,10 +249,7 @@ const props = withDefaults(
     input: () => ({
       clearOnCountrySelect: true,
       focusAfterCountrySelect: true,
-      formatter: {
-        enabled: true,
-        formatOnInit: true,
-      },
+      formatterEnabled: true,
     }),
     prefix: () => ({
       hidden: false,
@@ -324,7 +321,7 @@ const selectedCountryIdx = computed(() =>
     (c) => getCountryCodeByIso(c.iso) === model.value.code
   )
 );
-const needFormat = computed(() => !!input.value?.formatter?.enabled);
+const needFormat = computed(() => !!input.value?.formatterEnabled);
 
 const { validCountries, defaultIso, config } = useValidCountries(
   countryCodes,
@@ -332,6 +329,15 @@ const { validCountries, defaultIso, config } = useValidCountries(
   defaultCountryCode,
   silent
 );
+
+const searchQuery = computed(() => model.value.search);
+
+const { results: filteredCountries } = useCountrySearch({
+  countries: validCountries,
+  query: searchQuery,
+  codeGetter: getCountryCodeByIso,
+  limit: null,
+});
 
 const { initialData } = useInit(
   defaultIso,
@@ -358,7 +364,7 @@ const dispNameKey = computed<keyof CountryConfig>(() =>
   displayName.value == "english" ? "name" : "nativeName"
 );
 
-const model = ref({
+const model = ref<TelInputModel>({
   iso: initialData?.country!.toString() || defaultIso.value,
   name: config[initialData?.country!]
     ? config[initialData?.country!][dispNameKey.value]
@@ -380,22 +386,6 @@ const isoRef = computed({
   set: (v: string) => (model.value.iso = v),
 });
 
-const filteredCountries = computed(() => {
-  if (!model.value.search) return validCountries.value;
-  const searchLower = model.value.search.toLowerCase();
-
-  return validCountries.value.filter((c) => {
-    const name = c[dispNameKey.value].toLowerCase();
-    const code = getCountryCodeByIso(c.iso).toLowerCase();
-    const iso = c.iso.toLowerCase();
-    return (
-      name.includes(searchLower) ||
-      code.includes(searchLower) ||
-      iso.includes(searchLower)
-    );
-  });
-});
-
 const telNumInputEl = useTemplateRef<HTMLElement>("telNumInput");
 const scrollListEl = useTemplateRef<HTMLElement>("scrollList");
 const inputEl = useTemplateRef<HTMLInputElement>("inputEl");
@@ -406,12 +396,7 @@ onClickOutside(telNumInputEl, () => {
 });
 
 onMounted(() => {
-  if (
-    needFormat.value &&
-    model.value.value &&
-    input.value.formatter?.formatOnInit
-  )
-    formatNow();
+  if (needFormat.value && model.value.value) formatNow();
 });
 
 const switchDropdown = (value?: boolean) => {
@@ -451,6 +436,7 @@ const { setComposing, formatNow } = usePhoneFormat({
   needFormat,
   inputEl,
   international,
+  excludeCountryCodes,
   onAfterFormat: () => {
     emit("update:modelValue", model.value);
   },

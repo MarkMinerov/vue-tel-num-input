@@ -3,7 +3,19 @@ import { AsYouType, getCountryCallingCode } from "libphonenumber-js/core";
 import metadata from "libphonenumber-js/metadata.full.json";
 import type { CountryCode } from "libphonenumber-js/core";
 
+import CC_PRIORITY from "~/assets/configs/priority.json";
+
 type InputEl = HTMLInputElement | null | undefined;
+
+function pickPreferredIso(cc: string, candidates: string[]): string | null {
+  const prefs = CC_PRIORITY[cc as keyof typeof CC_PRIORITY];
+  if (!prefs || prefs.length === 0) return null;
+  const set = new Set(candidates.map((s) => s.toUpperCase()));
+  for (const iso of prefs) {
+    if (set.has(iso)) return iso;
+  }
+  return null;
+}
 
 const ccToIso = (() => {
   const map = new Map<string, string[]>();
@@ -23,17 +35,22 @@ export function usePhoneFormat(params: {
   international: Ref<boolean>;
   needFormat: Ref<boolean>;
   inputEl: Ref<InputEl>;
+  excludeCountryCodes: Ref<string[]>;
   onAfterFormat?: (formatted: string) => void;
 }) {
   const isFormatting = ref(false);
   const isComposing = ref(false);
 
+  const isExcluded = (iso: string) =>
+    Array.isArray(params.excludeCountryCodes.value) &&
+    params.excludeCountryCodes.value.some(
+      (c) => c.toUpperCase() === iso.toUpperCase()
+    );
+
   const setComposing = (v: boolean) => (isComposing.value = v);
 
   const fmtIntl = (s: string) =>
     new AsYouType(undefined, metadata as any).input(s);
-  const fmtWithCountry = (s: string, c?: CountryCode) =>
-    new AsYouType(c, metadata as any).input(s);
 
   const getISO = () =>
     (params.iso.value || "").toUpperCase() as CountryCode | undefined;
@@ -53,18 +70,31 @@ export function usePhoneFormat(params: {
     const m = input.match(/^\+(\d{1,3})/);
     if (!m) return;
     const digits = m[1];
+
     for (const len of [3, 2, 1]) {
       const cc = digits.slice(0, len);
       if (!cc) continue;
+
       const list = ccToIso.get(cc);
-      if (!list) continue;
-      if (list.length === 1) {
-        const iso = list[0];
+      if (!list || list.length === 0) continue;
+
+      const candidates = list.filter((iso) => !isExcluded(iso));
+      if (candidates.length === 0) return;
+
+      if (candidates.length === 1) {
+        const iso = candidates[0];
         if (iso && iso !== (params.iso.value || "").toUpperCase()) {
           params.iso.value = iso as any;
         }
         return;
       }
+
+      const preferred = pickPreferredIso(cc, candidates);
+      if (preferred && preferred !== (params.iso.value || "").toUpperCase()) {
+        params.iso.value = preferred as any;
+        return;
+      }
+
       return;
     }
   };
