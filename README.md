@@ -2,6 +2,16 @@
 
 A fully customizable **phone number input** for Vue 3 with country selection, flags, masking, and localization. Built for flexibility and great DX.
 
+## Install
+
+```bash
+npm i libphonenumber-js vue-tel-num-input
+# or
+npm i libphonenumber-js vue-tel-num-input
+# or
+npm i libphonenumber-js vue-tel-num-input
+```
+
 ## Demo ❤️
 
 ![](./demo.gif)
@@ -17,16 +27,6 @@ A fully customizable **phone number input** for Vue 3 with country selection, fl
 - TypeScript-first API (exports useful types)
 - Performant lists (optional virtual scroll)
 - Opt-in default styles, easy to replace
-
-## Install
-
-```bash
-npm i libphonenumber-js vue-tel-num-input
-# or
-npm i libphonenumber-js vue-tel-num-input
-# or
-npm i libphonenumber-js vue-tel-num-input
-```
 
 ℹ️ This component uses [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js) under the hood for phone number validation and formatting (international and national styles).
 
