@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkMinerov/vue3-tel-input.git"
+    "url": "https://github.com/MarkMinerov/vue-tel-num-input"
   },
   "keywords": [
     "vue3",
