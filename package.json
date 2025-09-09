@@ -1,6 +1,6 @@
 {
   "name": "vue-tel-num-input",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "author": {
     "name": "Mark Minerov",
@@ -31,6 +31,9 @@
   "module": "./dist/index.es.js",
   "style": "dist/css/style.css",
   "types": "./dist/types/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],

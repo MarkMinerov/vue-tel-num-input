@@ -1,0 +1,46 @@
+name: Release (tag -> npm via OIDC)
+
+on:
+  push:
+    tags:
+      - "v*" # например: v1.2.3
+
+permissions:
+  contents: read
+  id-token: write # ОБЯЗАТЕЛЬНО для OIDC
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-publish # тот самый Environment name из формы (или убери эту строку, если поле оставил пустым)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify tag == package.json version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(node -p "require('./package.json').version")
+          echo "Tag: $TAG | package.json: $PKG"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "Tag v$TAG != package.json version $PKG"
+            exit 1
+          fi
+
+      - name: Publish to npm (OIDC, no token)
+        run: |
+          # если пакет scoped и публичный — оставь --access public
+          npm publish --provenance --access public
