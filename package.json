@@ -24,6 +24,7 @@
     "vue3-component",
     "vue3-phone-input",
     "vue3-tel-input",
+    "vue-tel-num-input",
     "vue3-telephone-input",
     "vue3-telnum-input",
     "vue3-tel-num-input"

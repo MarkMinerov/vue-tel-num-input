@@ -400,7 +400,7 @@ This component is currently in beta.
 The API and behavior may still change before a stable release.
 
 If you encounter any bugs, unexpected behavior, or have feature requests:
-👉 please open an issue on [GitHub](https://github.com/MarkMinerov/vue3-tel-input/issues)
+👉 please open an issue on [GitHub](https://github.com/MarkMinerov/vvue-tel-num-input/issues)
 
 Your feedback will help improve and stabilize the component for production use.
 

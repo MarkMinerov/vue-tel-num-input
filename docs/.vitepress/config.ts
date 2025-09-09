@@ -4,7 +4,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
   title: "Vue Tel Input",
   description: "A VitePress Site",
-  base: "/vue3-tel-input/",
+  base: "/vue-tel-num-input/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

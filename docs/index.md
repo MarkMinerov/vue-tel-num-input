@@ -12,7 +12,7 @@ hero:
       link: /getting-started
     - theme: alt
       text: GitHub
-      link: https://github.com/MarkMinerov/vue3-tel-input
+      link: https://github.com/MarkMinerov/vue-tel-num-input
   image:
     src: /logo.svg
     alt: TelInput hero
