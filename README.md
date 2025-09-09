@@ -61,47 +61,50 @@ const phone = ref("");
 
 ## Props
 
-| Prop                            | Type                                    | Default                | Description                                                    |
-| ------------------------------- | --------------------------------------- | ---------------------- | -------------------------------------------------------------- |
-| `size`                          | `"sm" \| "md" \| "lg" \| "xl" \| "xxl"` | `"lg"`                 | Component sizing (affects row/item heights via CSS variables). |
-| `disableSizing`                 | `boolean`                               | `false`                | Turn off built-in sizing classes.                              |
-| `countryCodes`                  | `string[]`                              | `[]`                   | Allowlist of ISO2 codes to show.                               |
-| `excludeCountryCodes`           | `string[]`                              | `[]`                   | Blocklist of ISO2 codes to hide.                               |
-| `defaultCountryCode`            | `string`                                | `"US"`                 | Initial country ISO2.                                          |
-| `initialValue`                  | `string`                                | `""`                   | Initial input value.                                           |
-| `international`                 | `boolean`                               | `true`                 | Format as international (`+XX`) if true, national if false.    |
-| `placeholder`                   | `string \| Record<string,string>`       | `"Enter phone number"` | Static placeholder or locale map.                              |
-| `locale`                        | `string`                                | `-`                    | Key to pick from `placeholder` object.                         |
-| `disabled`                      | `boolean`                               | `false`                | Disable input.                                                 |
-| `flagSource`                    | `"emoji" \| "sprite" \| "cdn"           | `"emoji"`              | Strategy for flag rendering (emoji, sprite, CDN).              |
-| `displayName`                   | `"english" \| "native"`                 | `"english"`            | Country name to display.                                       |
-| `itemHeight`                    | `number`                                | size-based             | Row height override in px.                                     |
-| `autoDetectCountry`             | `boolean`                               | `false`                | Detect user country on mount (best effort).                    |
-| **Input options**               |                                         |                        |                                                                |
-| `input.clearOnCountrySelect`    | `boolean`                               | `true`                 | Clear input when selecting a new country.                      |
-| `input.focusAfterCountrySelect` | `boolean`                               | `true`                 | Autofocus input after selecting a new country.                 |
-| `input.formatterEnabled`        | `boolean`                               | `true`                 | Enable libphonenumber formatting while typing.                 |
-| `input.lockCountryCode`         | `boolean`                               | `false`                | Prevent user from removing/editing the country code.           |
-| `input.maxLength`               | `number \| undefined`                   | `undefined`            | Optional character cap for input.                              |
-| **Search options**              |                                         |                        |                                                                |
-| `search.hidden`                 | `boolean`                               | `false`                | Hide search bar in dropdown.                                   |
-| `search.placeholder`            | `string \| Record<string,string>`       | `undefined`            | Placeholder text or localized map.                             |
-| `search.locale`                 | `string`                                | `undefined`            | Key to pick from `search.placeholder` map.                     |
-| `search.clearOnSelect`          | `boolean`                               | `true`                 | Clear search query after selecting a country.                  |
-| `search.autoFocus`              | `boolean`                               | `true`                 | Autofocus the search input when dropdown opens.                |
-| **Prefix options**              |                                         |                        |                                                                |
-| `prefix.hidden`                 | `boolean`                               | `false`                | Hide prefix button entirely.                                   |
-| `prefix.hideCode`               | `boolean`                               | `false`                | Hide dialing code in prefix.                                   |
-| `prefix.hideFlag`               | `boolean`                               | `false`                | Hide flag in prefix.                                           |
-| `prefix.hideChevron`            | `boolean`                               | `false`                | Hide dropdown chevron.                                         |
-| `prefix.hideCountryName`        | `boolean`                               | `false`                | Hide country name in prefix.                                   |
-| **List options**                |                                         |                        |                                                                |
-| `list.hidden`                   | `boolean`                               | `false`                | Hide country list (disables dropdown).                         |
-| `list.hideCode`                 | `boolean`                               | `false`                | Hide dialing codes inside the list.                            |
-| `list.hideFlag`                 | `boolean`                               | `false`                | Hide flags inside the list.                                    |
-| `list.hideCountryName`          | `boolean`                               | `false`                | Hide country names inside the list.                            |
-| `list.returnToSelected`         | `boolean`                               | `true`                 | Scroll back to selected country when reopening dropdown.       |
-| `list.itemsPerView`             | `number`                                | `5`                    | Max visible items in dropdown before scrolling.                |
+| Prop                            | Type                                    | Default                | Description                                                   |
+| ------------------------------- | --------------------------------------- | ---------------------- | ------------------------------------------------------------- |
+| `size`                          | `"sm" \| "md" \| "lg" \| "xl" \| "xxl"` | `"lg"`                 | Component sizing (affects row/item heights via CSS variables) |
+| `disableSizing`                 | `boolean`                               | `false`                | Turn off built-in sizing classes                              |
+| `displayName`                   | `"english" \| "native"`                 | `"english"`            | Country name to display                                       |
+| `countryCodes`                  | `string[]`                              | `[]`                   | Allowlist of ISO2 codes to show                               |
+| `excludeCountryCodes`           | `string[]`                              | `[]`                   | Blocklist of ISO2 codes to hide                               |
+| `autoDetectCountry`             | `boolean`                               | `false`                | Detect user country on mount (best effort)                    |
+| `defaultCountryCode`            | `string`                                | `"US"`                 | Initial country ISO2                                          |
+| `disabled`                      | `boolean`                               | `false`                | Disable input                                                 |
+| `silent`                        | `boolean`                               | `false`                | Suppress component warns                                      |
+| `initialValue`                  | `string`                                | `""`                   | Initial input value                                           |
+| `international`                 | `boolean`                               | `true`                 | Format as international (`+XX`) if true, national if false    |
+| `placeholder`                   | `string \| Record<string,string>`       | `"Enter phone number"` | Static placeholder or locale map                              |
+| `locale`                        | `string`                                | `-`                    | Key to pick from `placeholder` object                         |
+| `flagSource`                    | `"emoji" \| "sprite" \| "cdn"           | `"emoji"`              | Strategy for flag rendering (emoji, sprite, CDN)              |
+| `itemHeight`                    | `number`                                | size-based             | Row height override in px                                     |
+| `animationName`                 | `string`                                | `fade`                 | Animation name for `<Transition>` built-in Vue component      |
+| **Input options**               |                                         |                        |                                                               |
+| `input.clearOnCountrySelect`    | `boolean`                               | `true`                 | Clear input when selecting a new country                      |
+| `input.focusAfterCountrySelect` | `boolean`                               | `true`                 | Autofocus input after selecting a new country                 |
+| `input.formatterEnabled`        | `boolean`                               | `true`                 | Enable libphonenumber formatting while typing                 |
+| `input.lockCountryCode`         | `boolean`                               | `false`                | Prevent user from removing/editing the country code           |
+| `input.maxLength`               | `number \| undefined`                   | `undefined`            | Optional character cap for input                              |
+| `input.required`                | `boolean`                               | `false`                | Default input `required` attribute                            |
+| **Search options**              |                                         |                        |                                                               |
+| `search.hidden`                 | `boolean`                               | `false`                | Hide search bar in dropdown                                   |
+| `search.placeholder`            | `string \| Record<string,string>`       | `undefined`            | Placeholder text or localized map                             |
+| `search.locale`                 | `string`                                | `undefined`            | Key to pick from `search.placeholder` map                     |
+| `search.clearOnSelect`          | `boolean`                               | `true`                 | Clear search query after selecting a country                  |
+| `search.autoFocus`              | `boolean`                               | `true`                 | Autofocus the search input when dropdown opens                |
+| **Prefix options**              |                                         |                        |                                                               |
+| `prefix.hidden`                 | `boolean`                               | `false`                | Hide prefix button entirely                                   |
+| `prefix.hideCode`               | `boolean`                               | `false`                | Hide dialing code in prefix                                   |
+| `prefix.hideFlag`               | `boolean`                               | `false`                | Hide flag in prefix                                           |
+| `prefix.hideChevron`            | `boolean`                               | `false`                | Hide dropdown chevron                                         |
+| `prefix.hideCountryName`        | `boolean`                               | `false`                | Hide country name in prefix                                   |
+| **List options**                |                                         |                        |                                                               |
+| `list.hidden`                   | `boolean`                               | `false`                | Hide country list (disables dropdown)                         |
+| `list.hideCode`                 | `boolean`                               | `false`                | Hide dialing codes inside the list                            |
+| `list.hideFlag`                 | `boolean`                               | `false`                | Hide flags inside the list                                    |
+| `list.hideCountryName`          | `boolean`                               | `false`                | Hide country names inside the list                            |
+| `list.returnToSelected`         | `boolean`                               | `true`                 | Scroll back to selected country when reopening dropdown       |
+| `list.itemsPerView`             | `number`                                | `5`                    | Max visible items in dropdown before scrolling                |
 
 > _Flag strategy notes_
 >
@@ -260,7 +263,6 @@ const detectCountry = async () => {
 ```vue
 <VueTelNumInput v-model="phone">
   <template #prefix:flag>
-    <!-- Your SVG or component -->
     <MyFlag :iso="model.iso" />
   </template>
 
