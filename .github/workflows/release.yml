@@ -3,16 +3,15 @@ name: Release (tag -> npm via OIDC)
 on:
   push:
     tags:
-      - "v*" # например: v1.2.3
+      - "v*"
 
 permissions:
   contents: read
-  id-token: write # ОБЯЗАТЕЛЬНО для OIDC
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: npm-publish # тот самый Environment name из формы (или убери эту строку, если поле оставил пустым)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -42,5 +41,4 @@ jobs:
 
       - name: Publish to npm (OIDC, no token)
         run: |
-          # если пакет scoped и публичный — оставь --access public
-          npm publish --provenance --access public
+          npm publish --access public
