@@ -69,6 +69,7 @@
           @blur="emit('blur')"
           :placeholder="placVal"
           :disabled="disabled"
+          :required="input.required"
         />
       </slot>
     </div>
@@ -165,7 +166,11 @@ import {
   watch,
 } from "vue";
 import type { CountryConfig, FlagConfig, TelInputModel } from "~/types";
-import { CountryCode, getCountryCallingCode } from "libphonenumber-js";
+import {
+  CountryCode,
+  getCountryCallingCode,
+  parsePhoneNumberFromString,
+} from "libphonenumber-js";
 
 import { useValidCountries } from "~/composables/useValidCountries";
 import { usePlaceholder } from "~/composables/usePlaceholder";
@@ -206,6 +211,7 @@ const props = withDefaults(
       displayName: "native" | "english";
       autoDetectCountry: boolean;
       input: Partial<{
+        required: boolean;
         clearOnCountrySelect: boolean;
         focusAfterCountrySelect: boolean;
         lockCountryCode: boolean;
@@ -251,6 +257,7 @@ const props = withDefaults(
     initialValue: "",
     international: true,
     input: () => ({
+      required: false,
       clearOnCountrySelect: true,
       focusAfterCountrySelect: true,
       formatterEnabled: true,
@@ -381,6 +388,7 @@ const model = ref<TelInputModel>({
   value: initialData ? props.initialValue : "",
   search: "",
   expanded: false,
+  valid: false,
 });
 
 const valueRef = computed({
@@ -480,6 +488,28 @@ watch(
 watch(searchEl, () => {
   if (search.value.autoFocus && searchEl.value) searchEl.value.focus();
 });
+
+watch(
+  () => model.value.value,
+  (newVal) => {
+    if (!newVal || newVal.trim() === model.value.code) {
+      model.value.valid = input.value.required ? false : true;
+      return;
+    }
+
+    try {
+      const phone = parsePhoneNumberFromString(
+        newVal,
+        model.value.iso as CountryCode
+      );
+      if (phone && phone.isValid()) model.value.valid = true;
+      else model.value.valid = false;
+    } catch {
+      model.value.valid = false;
+    }
+  },
+  { immediate: true }
+);
 
 defineExpose({
   switchDropdown,

@@ -21,12 +21,14 @@ A fully customizable **phone number input** for Vue 3 with country selection, fl
 ## Install
 
 ```bash
-npm i vue-tel-num-input
+npm i libphonenumber-js vue-tel-num-input
 # or
-pnpm add vue-tel-num-input
+npm i libphonenumber-js vue-tel-num-input
 # or
-yarn add vue-tel-num-input
+npm i libphonenumber-js vue-tel-num-input
 ```
+
+ℹ️ This component uses [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js) under the hood for phone number validation and formatting (international and national styles).
 
 Minimal styles (recommended):
 

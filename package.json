@@ -1,6 +1,6 @@
 {
   "name": "vue-tel-num-input",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "author": {
     "name": "Mark Minerov",
@@ -52,7 +52,8 @@
     "preview": "vite preview"
   },
   "peerDependencies": {
-    "vue": "^3.5.0"
+    "vue": "^3.5.0",
+    "libphonenumber-js": "^1.12.15"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
@@ -69,7 +70,6 @@
     "vue-tsc": "^3.0.5"
   },
   "dependencies": {
-    "country-flag-emoji-polyfill": "^0.1.8",
-    "libphonenumber-js": "^1.12.15"
+    "country-flag-emoji-polyfill": "^0.1.8"
   }
 }

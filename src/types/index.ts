@@ -37,6 +37,7 @@ export interface TelInputModel {
   value: string;
   search: string;
   expanded: boolean;
+  valid: boolean;
 }
 
 export type TelInputInitModel = Readonly<Partial<TelInputModel>>;
