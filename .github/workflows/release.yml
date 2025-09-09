@@ -1,4 +1,4 @@
-name: Release (tag -> npm via OIDC)
+name: Publish Package
 
 on:
   push:
@@ -6,39 +6,22 @@ on:
       - "v*"
 
 permissions:
+  id-token: write # Required for OIDC
   contents: read
-  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org
-          cache: npm
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
 
-      - name: Install
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Verify tag == package.json version
-        run: |
-          TAG="${GITHUB_REF_NAME#v}"
-          PKG=$(node -p "require('./package.json').version")
-          echo "Tag: $TAG | package.json: $PKG"
-          if [ "$TAG" != "$PKG" ]; then
-            echo "Tag v$TAG != package.json version $PKG"
-            exit 1
-          fi
-
-      - name: Publish to npm (OIDC, no token)
-        run: |
-          npm publish --access public
+      - name: Update npm
+        run: npm install -g npm@latest
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm publish
