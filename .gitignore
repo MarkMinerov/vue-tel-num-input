@@ -26,3 +26,5 @@ dist-ssr
 stats.html
 .vscode
 **/.vscode
+**/cache/**
+cache/**

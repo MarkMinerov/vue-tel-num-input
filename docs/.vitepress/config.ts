@@ -6,6 +6,9 @@ export default defineConfig({
   description: "A VitePress Site",
   base: "/vue-tel-num-input/",
   themeConfig: {
+    search: {
+      provider: "local",
+    },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
@@ -38,7 +41,10 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/vuejs/vitepress" },
+      {
+        icon: "github",
+        link: "https://github.com/MarkMinerov/vue-tel-num-input",
+      },
     ],
   },
 });

@@ -1,5 +1,15 @@
 # 📞 Vue Tel Num Input
 
+[![npm version](https://img.shields.io/npm/v/vue-tel-num-input)](https://www.npmjs.com/package/vue-tel-num-input)
+[![npm downloads](https://img.shields.io/npm/dm/vue-tel-num-input)](https://www.npmjs.com/package/vue-tel-num-input)
+[![CI](https://github.com/MarkMinerov/vue-tel-num-input/actions/workflows/release.yml/badge.svg)](https://github.com/MarkMinerov/vue-tel-num-input/actions)
+[![Docs](https://img.shields.io/badge/docs-vitepress-blue)](https://markminerov.github.io/vue-tel-num-input/)
+![GitHub Repo stars](https://img.shields.io/github/stars/MarkMinerov/vue-tel-num-input?style=social)
+[![License](https://img.shields.io/npm/l/vue-tel-num-input)](./LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/vue-tel-num-input)](https://bundlephobia.com/package/vue-tel-num-input)
+![vue3](https://img.shields.io/badge/vue-3.x-brightgreen.svg)
+[![TypeScript](https://img.shields.io/badge/TS-TypeScript-blue)](https://www.typescriptlang.org/)
+
 A fully customizable **phone number input** for Vue 3 with country selection, flags, masking, and localization. Built for flexibility and great DX.
 
 ## Install
