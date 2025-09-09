@@ -236,7 +236,6 @@ const props = withDefaults(
         hidden: boolean;
         hideCode: boolean;
         hideFlag: boolean;
-        hideChevron: boolean;
         hideCountryName: boolean;
         itemsPerView: number;
         returnToSelected: boolean;
@@ -276,7 +275,6 @@ const props = withDefaults(
       hideCountryName: false,
       returnToSelected: true,
       itemsPerView: DEFAULT_ITEMS_PER_VIEW,
-      hideChevron: false,
     }),
     search: () => ({
       hidden: false,

@@ -1,0 +1,126 @@
+/* Vue Tel Input — brand theme for VitePress
+   Brand: #42b883 (green), Accent: #35495e (slate) */
+
+/* ================================
+   Colors (scales & soft variants)
+   ================================ */
+:root {
+  /* base grayscale passthrough */
+  --vp-c-default-1: var(--vp-c-gray-1);
+  --vp-c-default-2: var(--vp-c-gray-2);
+  --vp-c-default-3: var(--vp-c-gray-3);
+  --vp-c-default-soft: var(--vp-c-gray-soft);
+
+  /* brand scale (green) */
+  --vp-c-brand-1: #2e8f67; /* darkest for text on soft */
+  --vp-c-brand-2: #3aa97a; /* hover */
+  --vp-c-brand-3: #42b883; /* solid backgrounds (buttons) */
+  /* soft bg (semi-transparent!) */
+  --vp-c-brand-soft: rgba(66, 184, 131, 0.15);
+
+  /* tip uses brand */
+  --vp-c-tip-1: var(--vp-c-brand-1);
+  --vp-c-tip-2: var(--vp-c-brand-2);
+  --vp-c-tip-3: var(--vp-c-brand-3);
+  --vp-c-tip-soft: var(--vp-c-brand-soft);
+
+  /* warning / danger keep defaults but a bit softer */
+  --vp-c-warning-1: #b08900;
+  --vp-c-warning-2: #d4a800;
+  --vp-c-warning-3: #f2c200;
+  --vp-c-warning-soft: rgba(242, 194, 0, 0.15);
+
+  --vp-c-danger-1: #b23a3a;
+  --vp-c-danger-2: #d64c4c;
+  --vp-c-danger-3: #f25f5f;
+  --vp-c-danger-soft: rgba(242, 95, 95, 0.15);
+}
+
+/* ================================
+   Buttons (brand)
+   ================================ */
+:root {
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-bg: var(--vp-c-brand-3);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-border: transparent;
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-active-bg: var(--vp-c-brand-1);
+}
+
+/* ================================
+   Home / Hero
+   ================================ */
+:root {
+  /* hero title gradient in Vue colors */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(
+    90deg,
+    #42b883 0%,
+    #35495e 100%
+  );
+
+  /* glow behind hero image (right card) */
+  --vp-home-hero-image-background-image: radial-gradient(
+      40% 40% at 70% 30%,
+      rgba(66, 184, 131, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(35% 35% at 35% 70%, rgba(53, 73, 94, 0.35), transparent 60%);
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --vp-home-hero-image-filter: blur(56px);
+  }
+}
+@media (min-width: 960px) {
+  :root {
+    --vp-home-hero-image-filter: blur(68px);
+  }
+}
+
+/* optional: a bit stronger drop-shadow on the hero image */
+.VPHomeHero .image-src {
+  filter: drop-shadow(0 10px 30px rgba(66, 184, 131, 0.25))
+    drop-shadow(0 20px 60px rgba(53, 73, 94, 0.25));
+}
+
+/* ================================
+   Custom Block (tip uses brand)
+   ================================ */
+:root {
+  --vp-custom-block-tip-border: transparent;
+  --vp-custom-block-tip-text: var(--vp-c-text-1);
+  --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
+  --vp-custom-block-tip-code-bg: var(--vp-c-brand-soft);
+}
+
+/* ================================
+   Algolia (if used)
+   ================================ */
+.DocSearch {
+  --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+
+/* ================================
+   Dark theme fine-tuning
+   ================================ */
+.dark {
+  /* чуть ярче brand в дарке */
+  --vp-c-brand-1: #3fb07b;
+  --vp-c-brand-2: #45c28a;
+  --vp-c-brand-3: #42b883;
+  --vp-c-brand-soft: rgba(66, 184, 131, 0.18);
+
+  /* hero title — тот же градиент, но можно усилить контраст */
+  --vp-home-hero-name-background: linear-gradient(
+    90deg,
+    #5ad09a 0%,
+    #3c5162 100%
+  );
+}

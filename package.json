@@ -1,6 +1,6 @@
 {
   "name": "vue-tel-num-input",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "author": {
     "name": "Mark Minerov",
@@ -49,11 +49,14 @@
     "watch:build": "vite build --watch",
     "build": "npm-run-all clean build:once",
     "build:once": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
-    "vue": "^3.5.0",
-    "libphonenumber-js": "^1.12.15"
+    "libphonenumber-js": "^1.12.15",
+    "vue": "^3.5.0"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
@@ -67,6 +70,7 @@
     "typescript": "~5.8.3",
     "vite": "^7.1.2",
     "vite-plugin-dts": "^4.2.1",
+    "vitepress": "^2.0.0-alpha.12",
     "vue-tsc": "^3.0.5"
   },
   "dependencies": {
