@@ -19,12 +19,24 @@ npm i libphonenumber-js vue-tel-num-input
 # or
 npm i libphonenumber-js vue-tel-num-input
 # or
-npm i libphonenumber-js vue-tel-num-input
+pnpm i libphonenumber-js vue-tel-num-input
 ```
 
 ## Demo ❤️
 
-![](./demo.gif)
+<div align="center">
+  <img src="./demo.gif" alt="Demo" />
+</div>
+
+## Playground 🚀
+
+[Open the online Playground on StackBlitz](https://stackblitz.com/edit/vue-tel-num-input?file=src%2FApp.vue)
+
+Try out the component live, tweak props, and experiment with integration directly in your browser.
+
+## Documentation 📚
+
+[View full documentation site](https://markminerov.github.io/vue-tel-num-input/) — guides, API reference, and more examples.
 
 ## Features
 
@@ -40,25 +52,20 @@ npm i libphonenumber-js vue-tel-num-input
 
 ℹ️ This component uses [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js) under the hood for phone number validation and formatting (international and national styles).
 
-Minimal styles (recommended):
-
-```ts
-// main.ts
-import "vue-tel-num-input/css";
-```
-
 ## Quick Start
 
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
-import VueTelNumInput from "vue-tel-num-input";
+import VueTelNumInput, { type TelInputInitModel } from "vue-tel-num-input";
+import "vue-tel-num-input/style.css";
+import "vue-tel-num-input/flags.css";
 
-const phone = ref("");
+const model = ref<TelInputInitModel>({});
 </script>
 
 <template>
-  <VueTelNumInput v-model="phone" default-country-code="US" />
+  <VueTelNumInput v-model="model" default-country-code="US" />
 </template>
 ```
 
@@ -67,7 +74,7 @@ const phone = ref("");
 - **Flexible by default**: sensible defaults, but every piece is swappable.
 - **Composable**: bring your data sources, flags, and masks.
 - **DX > ceremony**: clear props, typed model, documented slots & events.
-- **Performance-aware**: lazy assets, optional virtualization.
+- **Performance-aware**: lazy assets, lazy api icons loading.
 
 ## Props
 
@@ -86,7 +93,7 @@ const phone = ref("");
 | `international`                 | `boolean`                               | `true`                 | Format as international (`+XX`) if true, national if false    |
 | `placeholder`                   | `string \| Record<string,string>`       | `"Enter phone number"` | Static placeholder or locale map                              |
 | `locale`                        | `string`                                | `-`                    | Key to pick from `placeholder` object                         |
-| `flagSource`                    | `"emoji" \| "sprite" \| "cdn"           | `"emoji"`              | Strategy for flag rendering (emoji, sprite, CDN)              |
+| `flagSource`                    | `"emoji" \| "sprite" \| "cdn"`          | `"emoji"`              | Strategy for flag rendering (emoji, sprite, CDN)              |
 | `itemHeight`                    | `number`                                | size-based             | Row height override in px                                     |
 | `animationName`                 | `string`                                | `fade`                 | Animation name for `<Transition>` built-in Vue component      |
 | **Input options**               |                                         |                        |                                                               |
