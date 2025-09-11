@@ -4,6 +4,8 @@ import dts from "vite-plugin-dts";
 import path from "path";
 import { visualizer } from "rollup-plugin-visualizer";
 
+import googleAnalytics from "vitepress-plugin-google-analytics";
+
 const externals = ["vue", "libphonenumber-js"];
 
 export default defineConfig({
