@@ -13,7 +13,7 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     googleAnalytics({
-      id: "G-28W8D0244Y",
+      id: "G-FXX739P51K",
     });
   },
 } satisfies Theme;
