@@ -7,7 +7,7 @@ import "vue-tel-num-input/css";
 import "vue-tel-num-input/flags.css";
 ```
 
-v-model returns a typed object (TelInputModel), not a plain string.
+v-model returns a typed object (`TelInputModel`), not a plain string.
 Initialize with {} (component will populate it).
 
 1. **Minimal usage**

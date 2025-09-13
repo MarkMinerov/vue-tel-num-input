@@ -2,8 +2,6 @@
 
 `<VueTelNumInput>` emits events for integration with forms, validation, and custom UI logic.
 
----
-
 ## List of Events
 
 | Event               | Payload         | When it fires                                                                   |
@@ -12,8 +10,6 @@
 | `toggle`            | `boolean`       | Whenever the country list (dropdown) is opened (`true`) or closed (`false`).    |
 | `focus`             | `void`          | When the text input receives focus.                                             |
 | `blur`              | `void`          | When the text input loses focus.                                                |
-
----
 
 ## Details
 
