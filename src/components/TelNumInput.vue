@@ -165,7 +165,7 @@ import {
   nextTick,
   watch,
 } from "vue";
-import type { CountryConfig, FlagConfig, TelInputModel } from "~/types";
+import type { Country, FlagConfig, TelInputModel } from "~/types";
 import {
   CountryCode,
   getCountryCallingCode,
@@ -181,6 +181,7 @@ import { getUserCountry } from "~/composables/getUserCountry";
 import { useInit } from "~/composables/useInit";
 
 import FlagIcon from "./FlagIcon.vue";
+import { useGetNames } from "~/composables/useGetNames";
 
 const DEFAULT_ITEMS_PER_VIEW = 5;
 
@@ -334,7 +335,7 @@ const selectedCountryIdx = computed(() =>
 );
 const needFormat = computed(() => !!input.value?.formatterEnabled);
 
-const { validCountries, defaultIso, config } = useValidCountries(
+const { validCountries, defaultIso } = useValidCountries(
   countryCodes,
   excludeCountryCodes,
   defaultCountryCode,
@@ -371,15 +372,18 @@ const { placVal: searchPlacVal } = usePlaceholder(
   "Search..."
 );
 
-const dispNameKey = computed<keyof CountryConfig>(() =>
+const dispNameKey = computed<"name" | "nativeName">(() =>
   displayName.value == "english" ? "name" : "nativeName"
+);
+
+const { getNames } = useGetNames();
+const { name, nativeName } = getNames(
+  (initialData?.country || defaultIso.value) as CountryCode
 );
 
 const model = ref<TelInputModel>({
   iso: initialData?.country!.toString() || defaultIso.value,
-  name: config[initialData?.country!]
-    ? config[initialData?.country!][dispNameKey.value]
-    : config[defaultIso.value][dispNameKey.value],
+  name: (dispNameKey.value == "name" ? name : nativeName) || "",
   code: initialData?.countryCallingCode
     ? `+${initialData?.countryCallingCode}`
     : getCountryCodeByIso(defaultIso.value),
@@ -430,7 +434,7 @@ const switchDropdown = (value?: boolean) => {
   emit("toggle", model.value.expanded);
 };
 
-const selectItem = (data: CountryConfig) => {
+const selectItem = (data: Country) => {
   model.value = {
     ...model.value,
     ...data,
@@ -471,13 +475,13 @@ watch(
   (newIso) => {
     if (!newIso) return;
     const iso = newIso.toUpperCase();
-    const cfg = config[iso];
+    const cfg = validCountries.value.find((c) => c.iso === iso);
     if (!cfg) return;
 
     model.value = {
       ...model.value,
       iso,
-      name: cfg[dispNameKey.value],
+      name: cfg[dispNameKey.value] || "",
       code: getCountryCodeByIso(iso),
     };
   }

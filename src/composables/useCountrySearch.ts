@@ -1,12 +1,7 @@
 import { computed, type ComputedRef, type Ref } from "vue";
+import { Country } from "~/types";
 
-export type CountryLike = {
-  iso: string;
-  name: string;
-  nativeName: string;
-};
-
-type Options<T extends CountryLike> = {
+type Options<T extends Country> = {
   countries: ComputedRef<T[]> | Ref<T[]> | T[];
   query: Ref<string>;
   codeGetter: (iso: string) => string;
@@ -19,7 +14,7 @@ const normalize = (s: string, strip = true) => {
   return strip ? v.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : v;
 };
 
-export function useCountrySearch<T extends CountryLike>(opts: Options<T>) {
+export function useCountrySearch<T extends Country>(opts: Options<T>) {
   const {
     countries,
     query,

@@ -1,10 +1,9 @@
 import { Ref, computed, watch } from "vue";
-import configJson from "~/assets/configs/iso.json";
-import type { ConfigType, Country } from "~/types";
+import { type Country } from "~/types";
+import { getCountries, type CountryCode } from "libphonenumber-js";
 
 import { useWarn } from "./useWarn";
-
-const config = configJson as unknown as ConfigType;
+import { useGetNames } from "./useGetNames";
 
 export const useValidCountries = (
   refCountryCodes: Ref<string[]>,
@@ -15,7 +14,8 @@ export const useValidCountries = (
   let warn = useWarn(silent.value);
   watch(silent, (newVal) => (warn = useWarn(newVal)));
 
-  const isoCodes = Object.keys(config).map((code) => code.toUpperCase());
+  const isoCodes = getCountries();
+  const { getNames } = useGetNames();
 
   const validCountryCodes = computed(() => {
     const propsCountryCodes = Array.from(
@@ -27,10 +27,10 @@ export const useValidCountries = (
       countryCodes = isoCodes;
     } else {
       const validCodes = propsCountryCodes.filter((code) =>
-        isoCodes.includes(code)
+        isoCodes.includes(code as CountryCode)
       );
       const invalidCodes = propsCountryCodes.filter(
-        (code) => !isoCodes.includes(code)
+        (code) => !isoCodes.includes(code as CountryCode)
       );
       if (invalidCodes.length > 0)
         warn(
@@ -50,18 +50,25 @@ export const useValidCountries = (
   });
 
   const validCountries = computed<Country[]>(() =>
-    validCountryCodes.value.map((code: string) => ({
-      ...config[code],
-      iso: code,
-    }))
+    validCountryCodes.value.map((code: string) => {
+      const { name, nativeName } = getNames(code as CountryCode);
+
+      console.log(name, nativeName);
+
+      return {
+        iso: code,
+        name,
+        nativeName,
+      };
+    })
   );
 
   const defaultIso = computed(() => {
     const defCode = defCountryCode.value?.toUpperCase();
 
-    if (!defCode || !isoCodes.includes(defCode)) return "US";
+    if (!defCode || !isoCodes.includes(defCode as CountryCode)) return "US";
     return defCode;
   });
 
-  return { isoCodes, validCountries, defaultIso, config };
+  return { isoCodes, validCountries, defaultIso };
 };

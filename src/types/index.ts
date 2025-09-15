@@ -1,12 +1,3 @@
-export type CountryConfig = {
-  name: string;
-  nativeName: string;
-};
-
-export type ConfigType = {
-  [key: string]: CountryConfig;
-};
-
 export interface EmojiConfig {
   strategy: "emoji";
   fontSize?: string | number;
@@ -26,8 +17,8 @@ export interface FlagApiExt {
 
 export interface Country {
   iso: string;
-  name: string;
-  nativeName: string;
+  name?: string;
+  nativeName?: string;
 }
 
 export interface TelInputModel {
