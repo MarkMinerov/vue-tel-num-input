@@ -210,7 +210,7 @@ export type VueTelNumInputExpose = {
   switchDropdown: (value?: boolean) => void;
 
   /** Select a specific country programmatically */
-  selectItem: (data: CountryConfig) => void;
+  selectItem: (data: Country) => void;
 
   /** Force re-formatting of the current phone number value */
   formatNow: () => void;
@@ -309,14 +309,10 @@ OR bring your own mask by replacing the `input` slot and binding back to `v-mode
 
 ## 💀 Types
 
-The library exports useful types:
+The library exports type for model ref:
 
 ```ts
-import type {
-  TelInputModel,
-  CountryConfig,
-  FlagConfig,
-} from "vue-tel-num-input";
+import type { TelInputModel } from "vue-tel-num-input";
 
 // Example TelInputModel shape:
 type TelInputModel = {
