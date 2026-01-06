@@ -53,8 +53,6 @@ export const useValidCountries = (
     validCountryCodes.value.map((code: string) => {
       const { name, nativeName } = getNames(code as CountryCode);
 
-      console.log(name, nativeName);
-
       return {
         iso: code,
         name,
