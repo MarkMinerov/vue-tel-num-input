@@ -1,0 +1,36 @@
+declare const _default: {
+  "1": [
+    "US",
+    "CA",
+    "PR",
+    "SX",
+    "TT",
+    "JM",
+    "BS",
+    "BB",
+    "AG",
+    "AI",
+    "DM",
+    "GD",
+    "KN",
+    "LC",
+    "VC",
+    "VG",
+    "VI",
+    "KY",
+    "MS"
+  ],
+  "7": ["RU", "KZ"],
+  "44": ["GB", "GG", "IM", "JE"],
+  "61": ["AU", "CX", "CC"],
+  "358": ["FI", "AX"],
+  "262": ["RE", "YT"],
+  "590": ["GP", "BL", "MF"],
+  "47": ["NO", "SJ"],
+  "39": ["IT", "VA"],
+  "500": ["FK", "GS"],
+  "599": ["CW", "BQ"]
+}
+;
+
+export default _default;
