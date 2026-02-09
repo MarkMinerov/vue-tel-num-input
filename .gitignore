@@ -28,5 +28,3 @@ stats.html
 **/.vscode
 **/cache/**
 cache/**
-package-lock.json
-yarn.lock
