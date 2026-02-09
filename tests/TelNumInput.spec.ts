@@ -114,7 +114,7 @@ describe("TelNumInput", () => {
       },
     });
 
-    const input = wrapper.find("input[type='text']");
+    const input = wrapper.find("input[type='tel']");
     expect(input.exists()).toBe(true);
 
     // Type a valid-looking international number
