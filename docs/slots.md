@@ -4,8 +4,9 @@
 
 > Important:
 >
-> - **All slots are plain slots (not scoped)** in the current implementation.
-> - Use your app state (e.g., `v-model` object) or global CSS if you need data inside slots.
+> - Prefix, input and search slots are **plain slots**.
+> - List item slots (`item:*`) are **scoped slots** and expose row data (see section below).
+> - You can still use your app state (e.g., `v-model` object) or global CSS if you need additional data inside slots.
 > - If you replace the internal `<input>` or search `<input>`, **you must keep the model and events in sync**.
 
 ---
@@ -107,36 +108,47 @@ Full override:
 </VueTelNumInput>
 ```
 
-List rows (`item:*`)
+## List rows (`item:*`)
 
-| Slot name          | Purpose                      | Notes      |
-| ------------------ | ---------------------------- | ---------- |
-| `item:before`      | Content before row contents  | Plain slot |
-| `item:flag`        | Replace the row flag         | Plain slot |
-| `item:code`        | Replace the row dialing code | Plain slot |
-| `item:countryName` | Replace the row country name | Plain slot |
-| `item:after`       | Content after row contents   | Plain slot |
+All `item:*` slots are **scoped slots**. They receive row data so you can fully control how each country is rendered.
 
-Example (simple embellishments):
+Depending on the specific slot, you get some of the following props:
+
+- `data` – raw country object
+- `index` – row index in the filtered list
+- `iso` – country ISO code (e.g. `US`)
+- `countryName` – display name for the country
+- `countryCode` – dialing code with `+` (e.g. `+421`)
+- `selected` – `true` if the row is currently selected
+
+| Slot name          | Purpose                      | Notes                 |
+| ------------------ | ---------------------------- | --------------------- |
+| `item:before`      | Content before row contents  | Scoped slot with data |
+| `item:flag`        | Replace the row flag         | Scoped slot with data |
+| `item:code`        | Replace the row dialing code | Scoped slot with data |
+| `item:countryName` | Replace the row country name | Scoped slot with data |
+| `item:after`       | Content after row contents   | Scoped slot with data |
+
+Example (simple embellishments with row data):
 
 ```vue
 <VueTelNumInput v-model="model">
-  <template #item:before>
-    <span>•</span>
+  <template #item:before="{ selected }">
+    <span v-if="selected">✔</span>
+    <span v-else>•</span>
   </template>
 
-    <template #item:flag>
-        <!-- You don't have row data here; keep visuals generic or use CSS -->
-        <span class="flag-placeholder" />
-    </template>
+  <template #item:flag="{ iso }">
+    <img :src="`/flags/${iso}.svg`" alt="" width="16" height="12" />
+  </template>
 
-    <template #item:code>
-        <span class="muted">(code)</span>
-    </template>
+  <template #item:code="{ countryCode }">
+    <span class="muted">{{ countryCode }}</span>
+  </template>
 </VueTelNumInput>
 ```
 
-> Note: The current version does not provide per-row scoped data (like `data.iso`) to `item:*` slots. If you need fully custom row rendering with access to each row’s `iso/code/name`, consider opening a feature request for scoped item slots.
+> Note: Only `item:*` slots are scoped and receive per-row data; prefix, input and search-related slots remain plain slots.
 
 ## Tips & Caveats
 

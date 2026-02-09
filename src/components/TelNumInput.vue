@@ -2,12 +2,16 @@
   <div
     class="tel-num-input"
     ref="telNumInput"
+    role="group"
+    :aria-disabled="disabled || undefined"
+    :aria-invalid="!model.valid || undefined"
     :class="[
       sizeClass,
       {
         expanded: model.expanded,
         empty: !filteredCountries.length,
         listHidden: list.hidden,
+        'has-error': !model.valid,
       },
     ]"
   >
@@ -15,7 +19,14 @@
       <div
         v-if="!prefix.hidden"
         class="prefix-container"
+        role="button"
+        :tabindex="disabled ? -1 : 0"
+        :aria-expanded="!list.hidden ? model.expanded : undefined"
+        :aria-haspopup="!list.hidden ? 'listbox' : undefined"
+        :aria-controls="model.expanded && !list.hidden ? listboxId : undefined"
         @click="switchDropdown()"
+        @keydown.enter.prevent="switchDropdown()"
+        @keydown.space.prevent="switchDropdown()"
       >
         <slot name="prefix:before" />
 
@@ -59,8 +70,10 @@
 
       <slot name="input">
         <input
-          type="text"
+          type="tel"
+          inputmode="tel"
           ref="inputEl"
+          :id="input.id"
           :maxLength="input.maxLength"
           @compositionstart="setComposing(true)"
           @compositionend="setComposing(false)"
@@ -70,6 +83,15 @@
           :placeholder="placVal"
           :disabled="disabled"
           :required="input.required"
+          role="textbox"
+          :aria-invalid="!model.valid || undefined"
+          :aria-required="input.required || undefined"
+          :aria-disabled="disabled || undefined"
+          :aria-label="input.ariaLabel"
+          :aria-describedby="input.describedBy"
+          :aria-controls="
+            model.expanded && !list.hidden ? listboxId : undefined
+          "
         />
       </slot>
     </div>
@@ -96,8 +118,10 @@
                 v-if="!search.hidden"
                 ref="searchEl"
                 type="text"
+                role="searchbox"
                 v-model="model.search"
                 :placeholder="searchPlacVal"
+                :aria-label="searchPlacVal"
               />
             </slot>
 
@@ -108,16 +132,22 @@
         <div
           class="list-container"
           ref="scrollList"
+          role="listbox"
+          :id="listboxId"
           :style="{ maxHeight: `${listHeight}px` }"
         >
           <div
             v-for="(data, index) of filteredCountries"
-            :tabindex="index"
+            :tabindex="disabled ? -1 : 0"
             @click="selectItem(data)"
+            @keydown.enter.prevent="selectItem(data)"
+            @keydown.space.prevent="selectItem(data)"
             :class="{ selected: model.iso == data.iso }"
             :key="index"
             :style="{ height: `${itemHeightComp}px` }"
             class="tel-num-input__body--item"
+            role="option"
+            :aria-selected="model.iso == data.iso"
           >
             <slot
               name="item:before"
@@ -254,6 +284,9 @@ const props = withDefaults(
         lockCountryCode: boolean;
         formatterEnabled: boolean;
         maxLength: number;
+        id: string;
+        ariaLabel: string;
+        describedBy: string;
       }>;
       search: Partial<{
         hidden: boolean;
@@ -347,6 +380,7 @@ const {
   itemHeight,
   animationName,
   autoDetectCountry,
+  disabled,
 } = toRefs(props);
 const searchLocale = toRef(() => props.search.locale);
 const searchPlaceholder = toRef(() => props.search.placeholder);
@@ -417,6 +451,10 @@ const { name, nativeName } = getNames(
   (initialData?.country || defaultIso.value) as CountryCode,
 );
 
+const listboxId = `tel-num-input-list-${Math.random()
+  .toString(36)
+  .slice(2, 9)}`;
+
 const model = ref<TelInputModel>({
   iso: initialData?.country!.toString() || defaultIso.value,
   name: (dispNameKey.value == "name" ? name : nativeName) || "",
@@ -452,6 +490,7 @@ onMounted(() => {
 });
 
 const switchDropdown = (value?: boolean) => {
+  if (disabled.value || list.value.hidden) return;
   if (value == null) model.value.expanded = !model.value.expanded;
   else model.value.expanded = value;
 
@@ -471,6 +510,7 @@ const switchDropdown = (value?: boolean) => {
 };
 
 const selectItem = (data: Country) => {
+  if (disabled.value) return;
   model.value = {
     ...model.value,
     ...data,
@@ -606,6 +646,12 @@ defineExpose({
     }
   }
 
+  &.has-error {
+    .tel-num-input__head {
+      border-color: var(--tel-input-error-border-color, #e53e3e);
+    }
+  }
+
   &__head {
     display: flex;
     flex-direction: row;
@@ -637,6 +683,11 @@ defineExpose({
           var(--tel-input-chevron-transition-delay, 0s)
           var(--tel-input-chevron-transition-prop, transform);
       }
+
+      &:focus-visible {
+        outline: var(--tel-input-focus-outline, 2px solid #3182ce);
+        outline-offset: var(--tel-input-focus-outline-offset, 1px);
+      }
     }
 
     input {
@@ -651,6 +702,11 @@ defineExpose({
 
       &::placeholder {
         color: #aaa;
+      }
+
+      &:focus-visible {
+        outline: var(--tel-input-focus-outline, 2px solid #3182ce);
+        outline-offset: var(--tel-input-focus-outline-offset, 1px);
       }
     }
   }
@@ -688,6 +744,11 @@ defineExpose({
         font-size: var(--tel-input-font-size, 14px);
         outline: var(--tel-input-search-outline, none);
         background-color: transparent;
+
+        &:focus-visible {
+          outline: var(--tel-input-focus-outline, 2px solid #3182ce);
+          outline-offset: var(--tel-input-focus-outline-offset, 1px);
+        }
       }
     }
 
@@ -738,6 +799,12 @@ defineExpose({
       &.selected {
         background-color: var(--tel-input-body-item-selected-bg, #ddd);
         color: var(--tel-input-body-item-selected-color, #333);
+      }
+
+      &:focus-visible {
+        outline: var(--tel-input-focus-outline, 2px solid #3182ce);
+        outline-offset: var(--tel-input-focus-outline-offset, -2px);
+        background-color: var(--tel-input-body-item-focus-bg, #eee);
       }
     }
   }
