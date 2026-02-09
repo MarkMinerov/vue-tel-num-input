@@ -1,0 +1,24 @@
+import { defineConfig } from "vitest/config";
+import vue from "@vitejs/plugin-vue";
+import path from "path";
+
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      "~": path.resolve(__dirname, "./src"),
+    },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    include: [
+      "src/**/*.test.{ts,tsx}",
+      "src/**/*.spec.{ts,tsx}",
+      "tests/**/*.test.{ts,tsx}",
+      "tests/**/*.spec.{ts,tsx}",
+    ],
+    setupFiles: ["tests/setup.ts"],
+    passWithNoTests: true,
+  },
+});

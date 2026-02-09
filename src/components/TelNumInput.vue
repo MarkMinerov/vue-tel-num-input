@@ -119,9 +119,23 @@
             :style="{ height: `${itemHeightComp}px` }"
             class="tel-num-input__body--item"
           >
-            <slot name="item:before" />
+            <slot
+              name="item:before"
+              :data="data"
+              :index="index"
+              :iso="data.iso"
+              :country-name="data[dispNameKey]"
+              :country-code="getCountryCodeByIso(data.iso)"
+              :selected="model.iso == data.iso"
+            />
 
-            <slot name="item:flag">
+            <slot
+              name="item:flag"
+              :data="data"
+              :index="index"
+              :iso="data.iso"
+              :selected="model.iso == data.iso"
+            >
               <FlagIcon
                 v-if="!list.hideFlag"
                 :flag="flag"
@@ -130,7 +144,14 @@
               />
             </slot>
 
-            <slot name="item:code">
+            <slot
+              name="item:code"
+              :data="data"
+              :index="index"
+              :iso="data.iso"
+              :country-code="getCountryCodeByIso(data.iso)"
+              :selected="model.iso == data.iso"
+            >
               <span
                 v-if="!list.hideCode"
                 class="tel-num-input__body--item__code"
@@ -138,7 +159,14 @@
               >
             </slot>
 
-            <slot name="item:countryName">
+            <slot
+              name="item:countryName"
+              :data="data"
+              :index="index"
+              :iso="data.iso"
+              :country-name="data[dispNameKey]"
+              :selected="model.iso == data.iso"
+            >
               <span
                 v-if="!list.hideCountryName"
                 class="tel-num-input__body--item__country-name"
@@ -146,7 +174,15 @@
               >
             </slot>
 
-            <slot name="item:after" />
+            <slot
+              name="item:after"
+              :data="data"
+              :index="index"
+              :iso="data.iso"
+              :country-name="data[dispNameKey]"
+              :country-code="getCountryCodeByIso(data.iso)"
+              :selected="model.iso == data.iso"
+            />
           </div>
         </div>
       </div>
@@ -282,7 +318,7 @@ const props = withDefaults(
       clearOnSelect: true,
       autoFocus: true,
     }),
-  }
+  },
 );
 
 const rowSizes = {
@@ -319,19 +355,19 @@ const getCountryCodeByIso = (iso: string) =>
   `+${getCountryCallingCode(iso as CountryCode)}`;
 
 const sizeClass = computed(() =>
-  disableSizing.value ? "" : `tel-num-input--${size.value ?? "lg"}`
+  disableSizing.value ? "" : `tel-num-input--${size.value ?? "lg"}`,
 );
 const listHeight = computed(
   () =>
-    (list.value.itemsPerView || DEFAULT_ITEMS_PER_VIEW) * itemHeightComp.value
+    (list.value.itemsPerView || DEFAULT_ITEMS_PER_VIEW) * itemHeightComp.value,
 );
 const itemHeightComp = computed(
-  () => itemHeight.value || rowSizes[size.value || "lg"]
+  () => itemHeight.value || rowSizes[size.value || "lg"],
 );
 const selectedCountryIdx = computed(() =>
   filteredCountries.value.findIndex(
-    (c) => getCountryCodeByIso(c.iso) === model.value.code
-  )
+    (c) => getCountryCodeByIso(c.iso) === model.value.code,
+  ),
 );
 const needFormat = computed(() => !!input.value?.formatterEnabled);
 
@@ -339,7 +375,7 @@ const { validCountries, defaultIso } = useValidCountries(
   countryCodes,
   excludeCountryCodes,
   defaultCountryCode,
-  silent
+  silent,
 );
 
 const searchQuery = computed(() => model.value.search);
@@ -355,30 +391,30 @@ const { initialData } = useInit(
   defaultIso,
   props.initialValue,
   international.value,
-  silent
+  silent,
 );
 
 const { placVal } = usePlaceholder(
   locale,
   placeholder,
   silent,
-  "Enter phone number"
+  "Enter phone number",
 );
 
 const { placVal: searchPlacVal } = usePlaceholder(
   searchLocale,
   searchPlaceholder,
   silent,
-  "Search..."
+  "Search...",
 );
 
 const dispNameKey = computed<"name" | "nativeName">(() =>
-  displayName.value == "english" ? "name" : "nativeName"
+  displayName.value == "english" ? "name" : "nativeName",
 );
 
 const { getNames } = useGetNames();
 const { name, nativeName } = getNames(
-  (initialData?.country || defaultIso.value) as CountryCode
+  (initialData?.country || defaultIso.value) as CountryCode,
 );
 
 const model = ref<TelInputModel>({
@@ -427,7 +463,7 @@ const switchDropdown = (value?: boolean) => {
     nextTick(() =>
       scrollListEl.value?.scrollTo({
         top: selectedCountryIdx.value * itemHeightComp.value,
-      })
+      }),
     );
   }
 
@@ -467,7 +503,7 @@ const { country, requestUserCountry } = getUserCountry({
 
 watch(
   () => model.value.search,
-  () => scrollListEl.value?.scrollTo({ top: 0 })
+  () => scrollListEl.value?.scrollTo({ top: 0 }),
 );
 
 watch(
@@ -484,7 +520,7 @@ watch(
       name: cfg[dispNameKey.value] || "",
       code: getCountryCodeByIso(iso),
     };
-  }
+  },
 );
 
 watch(searchEl, () => {
@@ -502,7 +538,7 @@ watch(
     try {
       const phone = parsePhoneNumberFromString(
         newVal,
-        model.value.iso as CountryCode
+        model.value.iso as CountryCode,
       );
       if (phone && phone.isValid()) model.value.valid = true;
       else model.value.valid = false;
@@ -510,7 +546,7 @@ watch(
       model.value.valid = false;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 defineExpose({
